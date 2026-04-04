@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/MateuszDudek/.gemini/antigravity/brain/14ceccce-46bf-457b-8c75-c53cfa6eb8bc/**)",
+      "Bash(curl -s \"https://www.b2b.gedeonpolska.com/pl/xmlapi/1/3/UTF8/557b0c5d-b1cd-43e4-ad74-27ef9af01c35\")",
+      "Bash(curl -v \"https://www.b2b.gedeonpolska.com/pl/xmlapi/1/3/UTF8/557b0c5d-b1cd-43e4-ad74-27ef9af01c35\")",
+      "Bash(curl -sk \"https://www.b2b.gedeonpolska.com/pl/xmlapi/1/3/UTF8/557b0c5d-b1cd-43e4-ad74-27ef9af01c35\")",
+      "Read(//c/Users/MateuszDudek/.gemini/antigravity/brain/b1be0607-3061-4539-9cde-a449e341b9cd/**)",
+      "Bash(npm install:*)",
+      "Bash(npx tsc:*)",
+      "Bash(node -e \":*)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\MateuszDudek\\.gemini\\antigravity\\brain\\14ceccce-46bf-457b-8c75-c53cfa6eb8bc",
+      "C:\\Users\\MateuszDudek\\.gemini\\antigravity\\brain\\b1be0607-3061-4539-9cde-a449e341b9cd"
+    ]
+  }
+}
