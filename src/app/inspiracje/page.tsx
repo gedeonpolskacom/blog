@@ -154,7 +154,7 @@ export default function InspirationsPage() {
               </h1>
               <p style={{ maxWidth: '620px', margin: '0 auto', fontSize: '1.05rem' }}>
                 {lang === 'pl'
-                  ? 'Nowoczesna galeria produktow Gedeon. Automatyczny uklad, rozne proporcje i zblizenie po otwarciu.'
+                  ? 'Nowoczesna galeria produktów Gedeon. Automatyczny układ, różne proporcje i zbliżenie po otwarciu.'
                   : 'A modern gallery of Gedeon products. Automatic layout, mixed proportions, and deep zoom in lightbox.'}
               </p>
             </motion.div>
@@ -225,13 +225,13 @@ export default function InspirationsPage() {
               >
                 {loading ? (
                   <div className="inspirations-empty">
-                    {lang === 'pl' ? 'Ladowanie galerii...' : 'Loading gallery...'}
+                    {lang === 'pl' ? 'Ładowanie galerii...' : 'Loading gallery...'}
                   </div>
                 ) : null}
 
                 {!loading && filtered.length === 0 ? (
                   <div className="inspirations-empty">
-                    {lang === 'pl' ? 'Brak zdjec dla wybranego filtra.' : 'No photos found for the selected filter.'}
+                    {lang === 'pl' ? 'Brak zdjęć dla wybranego filtra.' : 'No photos found for the selected filter.'}
                   </div>
                 ) : null}
 
@@ -253,7 +253,7 @@ export default function InspirationsPage() {
                       }),
                       button: ({ photo }) => ({
                         className: 'inspiration-item-button',
-                        'aria-label': lang === 'pl' ? `Podglad: ${photo.label}` : `Preview: ${photo.labelEn}`,
+                        'aria-label': lang === 'pl' ? `Podgląd: ${photo.label}` : `Preview: ${photo.labelEn}`,
                       }),
                       image: { className: 'inspiration-item-image', loading: 'lazy', decoding: 'async' },
                     }}

@@ -268,7 +268,7 @@ export async function POST(request: NextRequest) {
     }
 
     if (!result || result.error || !result.data) {
-      throw result?.error ?? new Error('Nie udalo sie zapisac artykulu');
+      throw result?.error ?? new Error('Nie udało się zapisać artykułu');
     }
 
     const row = result.data as {
@@ -409,13 +409,13 @@ export async function PATCH(request: NextRequest) {
     if (published_at !== undefined) updatePayload.published_at = published_at;
     if (title_pl !== undefined) {
       const value = String(title_pl ?? '').trim();
-      if (!value) return NextResponse.json({ error: 'title_pl nie moze byc puste' }, { status: 400 });
+      if (!value) return NextResponse.json({ error: 'title_pl nie może być puste' }, { status: 400 });
       updatePayload.title_pl = value;
     }
     if (title_en !== undefined) updatePayload.title_en = String(title_en ?? '').trim() || null;
     if (category !== undefined) {
       const value = String(category ?? '').trim();
-      if (!value) return NextResponse.json({ error: 'category nie moze byc pusta' }, { status: 400 });
+      if (!value) return NextResponse.json({ error: 'category nie może być pusta' }, { status: 400 });
       updatePayload.category = value;
     }
     if (tags !== undefined) updatePayload.tags = parseTags(tags);
@@ -431,7 +431,7 @@ export async function PATCH(request: NextRequest) {
     if (content_pl !== undefined) {
       normalizedBlocks = toContentBlocks(content_pl);
       if (normalizedBlocks.length === 0) {
-        return NextResponse.json({ error: 'content_pl nie moze byc puste' }, { status: 400 });
+        return NextResponse.json({ error: 'content_pl nie może być puste' }, { status: 400 });
       }
       updatePayload.content_pl = normalizedBlocks;
     }
@@ -450,7 +450,7 @@ export async function PATCH(request: NextRequest) {
         : deriveExcerpt('', normalizedBlocks);
       updatePayload.excerpt_pl = nextExcerpt || null;
       if (read_time === undefined) {
-        updatePayload.read_time = estimateReadTime(nextTitle || 'Artykul', nextExcerpt, normalizedBlocks);
+        updatePayload.read_time = estimateReadTime(nextTitle || 'Artykuł', nextExcerpt, normalizedBlocks);
       }
     }
 
@@ -496,7 +496,7 @@ export async function PATCH(request: NextRequest) {
       if (current.error) throw current.error;
       if (current.data?.status !== 'published') {
         return NextResponse.json(
-          { error: 'Polecany artykul moze byc ustawiony tylko dla opublikowanego wpisu' },
+          { error: 'Polecany artykuł może być ustawiony tylko dla opublikowanego wpisu' },
           { status: 400 },
         );
       }

@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     template: "%s | Gedeon Polska Blog",
   },
   description:
-    "Blog i galeria inspiracji dla studiów fotograficznych, sklepów foto i minilabow. Nowości produktowe, trendy, poradniki od Gedeon Polska — producenta albumów, ramek i mediów foto.",
+    "Blog i galeria inspiracji dla studiów fotograficznych, sklepów foto i minilabów. Nowości produktowe, trendy, poradniki od Gedeon Polska — producenta albumów, ramek i mediów foto.",
   keywords: [
     "albumy fotograficzne",
     "ramki do zdjęć",

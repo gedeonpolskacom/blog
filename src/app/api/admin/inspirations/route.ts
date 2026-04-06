@@ -610,7 +610,7 @@ export async function POST(request: NextRequest) {
 
     if (createdItems.length === 0) {
       return NextResponse.json(
-        { success: false, error: 'Nie udalo sie dodac zadnego pliku.', failed: failedItems },
+        { success: false, error: 'Nie udało się dodać żadnego pliku.', failed: failedItems },
         { status: 500 },
       );
     }

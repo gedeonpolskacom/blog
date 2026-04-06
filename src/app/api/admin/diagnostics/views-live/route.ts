@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
 
     if (!article) {
       return NextResponse.json(
-        { success: false, error: 'Brak opublikowanego artykulu do testu views.' },
+        { success: false, error: 'Brak opublikowanego artykułu do testu views.' },
         { status: 404 }
       );
     }
@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
 
     if (!article) {
       return NextResponse.json(
-        { success: false, error: 'Brak opublikowanego artykulu do testu views.' },
+        { success: false, error: 'Brak opublikowanego artykułu do testu views.' },
         { status: 404 }
       );
     }

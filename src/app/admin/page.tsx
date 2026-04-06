@@ -18,7 +18,7 @@ import {
   withoutHomeFeaturedTag,
 } from '@/lib/homepage-featured';
 
-// â”€â”€ Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Types
 
 interface Draft {
   id: string;
@@ -141,7 +141,7 @@ async function fetchJsonWithTimeout<T>(url: string, timeoutMs = 10000): Promise<
   }
 }
 
-// â”€â”€ StatCard â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// StatCard
 
 function StatCard({ icon: Icon, label, value, color }: {
   icon: React.FC<{ size?: number; color?: string; style?: React.CSSProperties }>;
@@ -227,7 +227,7 @@ function TopicStatusBadge({ status }: { status: Topic['status'] }) {
   );
 }
 
-// â”€â”€ AI Generator Panel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// AI Generator Panel
 
 function AIGeneratorPanel({ onGenerated }: { onGenerated: (draft: Draft) => void }) {
   const [topic, setTopic] = useState('');
@@ -246,7 +246,7 @@ function AIGeneratorPanel({ onGenerated }: { onGenerated: (draft: Draft) => void
   }, []);
 
   const handleGenerate = async () => {
-    if (!topic.trim()) { setError('Wpisz temat artykulu'); return; }
+    if (!topic.trim()) { setError('Wpisz temat artykułu'); return; }
     setGenerating(true);
     setError('');
     try {
@@ -275,10 +275,10 @@ function AIGeneratorPanel({ onGenerated }: { onGenerated: (draft: Draft) => void
         });
         setTopic('');
       } else {
-        setError(data.message ?? 'Blad generowania');
+        setError(data.message ?? 'Błąd generowania');
       }
     } catch {
-      setError('Polaczenie z AI nieudane');
+      setError('Połączenie z AI nieudane');
     } finally {
       setGenerating(false);
     }
@@ -300,7 +300,7 @@ function AIGeneratorPanel({ onGenerated }: { onGenerated: (draft: Draft) => void
             value={topic}
             onChange={e => setTopic(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && handleGenerate()}
-            placeholder="Wpisz temat artykulu..."
+            placeholder="Wpisz temat artykułu..."
             className="newsletter-input"
             style={{ flex: 1 }}
           />
@@ -349,7 +349,7 @@ function AIGeneratorPanel({ onGenerated }: { onGenerated: (draft: Draft) => void
           }}>
             {generating
               ? <><RefreshCw size={14} style={{ animation: 'spin 1s linear infinite' }} /> Generuje...</>
-              : <><Zap size={14} /> Generuj artykul</>}
+              : <><Zap size={14} /> Generuj artykuł</>}
           </button>
           <button onClick={() => setShowSuggestions(!showSuggestions)} style={{
             display: 'flex', alignItems: 'center', gap: '0.375rem',
@@ -396,7 +396,7 @@ function AIGeneratorPanel({ onGenerated }: { onGenerated: (draft: Draft) => void
   );
 }
 
-// â”€â”€ Topics Panel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Manual Article Panel
 
 function ManualArticlePanel({ onCreated }: { onCreated: (draft: Draft) => void }) {
   const [title, setTitle] = useState('');
@@ -410,11 +410,11 @@ function ManualArticlePanel({ onCreated }: { onCreated: (draft: Draft) => void }
 
   const handleCreate = async () => {
     if (!title.trim()) {
-      setError('Podaj tytul artykulu');
+      setError('Podaj tytuł artykułu');
       return;
     }
     if (!content.trim()) {
-      setError('Dodaj tresc artykulu');
+      setError('Dodaj treść artykułu');
       return;
     }
 
@@ -437,7 +437,7 @@ function ManualArticlePanel({ onCreated }: { onCreated: (draft: Draft) => void }
       const data = await res.json();
 
       if (!res.ok || !data.success || !data.article) {
-        setError(data.error ?? 'Blad zapisu artykulu');
+        setError(data.error ?? 'Błąd zapisu artykułu');
         return;
       }
 
@@ -459,7 +459,7 @@ function ManualArticlePanel({ onCreated }: { onCreated: (draft: Draft) => void }
       setTags('');
       setCoverImage('');
     } catch {
-      setError('Blad polaczenia z API');
+      setError('Błąd połączenia z API');
     } finally {
       setSaving(false);
     }
@@ -473,7 +473,7 @@ function ManualArticlePanel({ onCreated }: { onCreated: (draft: Draft) => void }
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem' }}>
         <PenLine size={18} color="#10b981" />
-        <h3 style={{ fontSize: '1rem', fontFamily: 'var(--font-body)', fontWeight: 600 }}>Wlasny artykul</h3>
+        <h3 style={{ fontSize: '1rem', fontFamily: 'var(--font-body)', fontWeight: 600 }}>Własny artykuł</h3>
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
@@ -481,7 +481,7 @@ function ManualArticlePanel({ onCreated }: { onCreated: (draft: Draft) => void }
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Tytul artykulu"
+            placeholder="Tytuł artykułu"
             className="newsletter-input"
             style={{ flex: '2 1 320px' }}
           />
@@ -511,7 +511,7 @@ function ManualArticlePanel({ onCreated }: { onCreated: (draft: Draft) => void }
         <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          placeholder="Tresc artykulu (oddziel akapity pustymi liniami)"
+          placeholder="Treść artykułu (oddziel akapity pustymi liniami)"
           className="newsletter-input"
           rows={8}
           style={{ resize: 'vertical', paddingTop: '0.7rem', minHeight: '180px' }}
@@ -571,13 +571,13 @@ function TopicsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
   const [hasMore, setHasMore] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
 
-  // Debounce search â†’ triggers server query
+  // Debounce search - triggers server query
   useEffect(() => {
     const t = setTimeout(() => setSearch(searchInput), 400);
     return () => clearTimeout(t);
   }, [searchInput]);
 
-  // offset is passed explicitly â€” avoids stale-closure duplicate-key bugs
+  // offset is passed explicitly - avoids stale-closure duplicate-key bugs
   const loadTopics = useCallback(async (reset: boolean, offset: number, q: string) => {
     if (reset) setLoading(true); else setLoadingMore(true);
     try {
@@ -604,7 +604,7 @@ function TopicsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
       }
       setHasMore(rows.length === PAGE_SIZE);
     } catch {
-      onNotify('BĹ‚Ä…d Ĺ‚adowania tematĂłw');
+      onNotify('Błąd ładowania tematów');
     } finally {
       setLoading(false);
       setLoadingMore(false);
@@ -643,12 +643,12 @@ function TopicsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
               generated_article_id: data.id,
             }
           : t));
-        onNotify(`âś“ "${data.article?.title_pl}" zapisany jako draft`);
+        onNotify(`✓ "${data.article?.title_pl}" zapisany jako draft`);
       } else {
-        onNotify(`BĹ‚Ä…d: ${data.message ?? data.error ?? 'BĹ‚Ä…d generowania'}`);
+        onNotify(`Błąd: ${data.message ?? data.error ?? 'Błąd generowania'}`);
       }
     } catch {
-      onNotify('BĹ‚Ä…d poĹ‚Ä…czenia z AI');
+      onNotify('Błąd połączenia z AI');
     } finally {
       setGeneratingId(null);
     }
@@ -679,12 +679,12 @@ function TopicsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
         ));
         setTopics(prev => prev.map(t => selectedIds.has(t.id) ? { ...t, status: 'generated' as const } : t));
         setSelectedIds(new Set());
-        onNotify(`âś“ ArtykuĹ‚ z ${sel.length} tematĂłw wygenerowany!`);
+        onNotify(`✓ Artykuł z ${sel.length} tematów wygenerowany!`);
       } else {
-        onNotify(`BĹ‚Ä…d: ${data.message ?? data.error ?? 'BĹ‚Ä…d generowania'}`);
+        onNotify(`Błąd: ${data.message ?? data.error ?? 'Błąd generowania'}`);
       }
     } catch {
-      onNotify('BĹ‚Ä…d poĹ‚Ä…czenia z AI');
+      onNotify('Błąd połączenia z AI');
     } finally {
       setGeneratingMulti(false);
     }
@@ -727,9 +727,9 @@ function TopicsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
-          <h2 style={{ fontSize: '1.2rem', fontFamily: 'var(--font-body)', fontWeight: 600 }}>Tematy do ArtykuĹ‚Ăłw</h2>
+          <h2 style={{ fontSize: '1.2rem', fontFamily: 'var(--font-body)', fontWeight: 600 }}>Tematy do Artykułów</h2>
           <p style={{ fontSize: '0.8rem', color: 'var(--color-gray-muted)', marginTop: '0.25rem' }}>
-            {totalCount} {filterPending ? 'oczekujÄ…cych' : 'Ĺ‚Ä…cznie'} Â· pokazano {topics.length} Â· z PIM sync
+            {totalCount} {filterPending ? 'oczekujących' : 'łącznie'} · pokazano {topics.length} · z PIM sync
           </p>
         </div>
         <div style={{ display: 'flex', gap: '0.5rem' }}>
@@ -741,7 +741,7 @@ function TopicsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
             color: filterPending ? 'var(--color-gold)' : 'var(--color-gray-muted)',
             cursor: 'pointer', fontFamily: 'var(--font-body)',
           }}>
-            <Filter size={12} /> {filterPending ? 'OczekujÄ…ce' : 'Wszystkie'}
+            <Filter size={12} /> {filterPending ? 'Oczekujące' : 'Wszystkie'}
           </button>
           <button onClick={() => loadTopics(true, 0, search)} style={{
             display: 'flex', alignItems: 'center', gap: '0.375rem',
@@ -749,7 +749,7 @@ function TopicsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
             background: 'var(--glass-bg)', border: '1px solid var(--glass-border)',
             color: 'var(--color-gray-muted)', cursor: 'pointer', fontFamily: 'var(--font-body)',
           }}>
-            <RefreshCw size={12} /> OdĹ›wieĹĽ
+            <RefreshCw size={12} /> Odśwież
           </button>
         </div>
       </div>
@@ -763,7 +763,7 @@ function TopicsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
         <input
           value={searchInput}
           onChange={e => setSearchInput(e.target.value)}
-          placeholder="Szukaj tematĂłw po nazwie..."
+          placeholder="Szukaj tematów po nazwie..."
           className="newsletter-input"
           style={{ width: '100%', paddingLeft: '2.375rem', boxSizing: 'border-box' }}
         />
@@ -772,7 +772,7 @@ function TopicsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
             position: 'absolute', right: '0.75rem', top: '50%', transform: 'translateY(-50%)',
             background: 'none', border: 'none', color: 'var(--color-gray-muted)',
             cursor: 'pointer', padding: '0.2rem', lineHeight: 1,
-          }}>âś•</button>
+          }}>×</button>
         )}
       </div>
 
@@ -804,12 +804,12 @@ function TopicsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
       {loading ? (
         <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--color-gray-muted)' }}>
           <RefreshCw size={24} style={{ animation: 'spin 1s linear infinite', margin: '0 auto 1rem', display: 'block' }} />
-          <p>Ĺadowanie tematĂłw...</p>
+          <p>Ładowanie tematów...</p>
         </div>
       ) : topics.length === 0 ? (
         <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--color-gray-muted)' }}>
           <Lightbulb size={40} style={{ margin: '0 auto 1rem', opacity: 0.4, display: 'block' }} />
-          <p>{search ? `Brak wynikĂłw dla â€ž${search}"` : 'Brak tematĂłw. Uruchom PIM sync.'}</p>
+          <p>{search ? `Brak wyników dla „${search}”` : 'Brak tematów. Uruchom PIM sync.'}</p>
         </div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
@@ -882,7 +882,7 @@ function TopicsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
                     <button
                       onClick={() => handleGenerate(topic)}
                       disabled={isGenerating || generatingMulti}
-                      title="Generuj artykuĹ‚ z tego tematu"
+                      title="Generuj artykuł z tego tematu"
                       style={{
                         display: 'flex', alignItems: 'center', gap: '0.3rem',
                         padding: '0.4rem 0.75rem', borderRadius: '8px', fontSize: '0.76rem',
@@ -896,7 +896,7 @@ function TopicsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
                         ? <><RefreshCw size={11} style={{ animation: 'spin 1s linear infinite' }} /> Generuje</>
                         : <><Zap size={11} /> Generuj</>}
                     </button>
-                    <button onClick={() => handleReject(topic.id)} title="OdrzuÄ‡ temat" style={{
+                    <button onClick={() => handleReject(topic.id)} title="Odrzuć temat" style={{
                       padding: '0.4rem', borderRadius: '8px',
                       background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)',
                       color: '#ef4444', cursor: 'pointer', display: 'flex', alignItems: 'center',
@@ -919,7 +919,7 @@ function TopicsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
                           color: 'var(--color-gold)', textDecoration: 'none', fontWeight: 600,
                         }}
                       >
-                        PodglÄ…d <ArrowRight size={11} />
+                        Podgląd <ArrowRight size={11} />
                       </a>
                     )}
                     <CheckCircle size={17} color="#10b981" />
@@ -946,8 +946,8 @@ function TopicsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
             }}
           >
             {loadingMore
-              ? <><RefreshCw size={13} style={{ animation: 'spin 1s linear infinite' }} /> Ĺadowanie...</>
-              : <><ChevronDown size={13} /> ZaĹ‚aduj wiÄ™cej ({Math.max(0, totalCount - topics.length)} pozostaĹ‚ych)</>}
+              ? <><RefreshCw size={13} style={{ animation: 'spin 1s linear infinite' }} /> Ładowanie...</>
+              : <><ChevronDown size={13} /> Załaduj więcej ({Math.max(0, totalCount - topics.length)} pozostałych)</>}
           </button>
         </div>
       )}
@@ -971,7 +971,7 @@ function TopicsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
             }}
           >
             <span style={{ fontSize: '0.875rem', color: 'var(--color-cream)' }}>
-              <span style={{ color: '#8b5cf6', fontWeight: 700 }}>{selectedIds.size}</span> tematĂłw zaznaczonych
+              <span style={{ color: '#8b5cf6', fontWeight: 700 }}>{selectedIds.size}</span> tematów zaznaczonych
             </span>
             <button
               onClick={handleGenerateMulti}
@@ -987,8 +987,8 @@ function TopicsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
               }}
             >
               {generatingMulti
-                ? <><RefreshCw size={14} style={{ animation: 'spin 1s linear infinite' }} /> Generuje artykuĹ‚...</>
-                : <><Sparkles size={14} /> Generuj 1 artykuĹ‚ z {selectedIds.size} tematĂłw</>}
+                ? <><RefreshCw size={14} style={{ animation: 'spin 1s linear infinite' }} /> Generuje artykuł...</>
+                : <><Sparkles size={14} /> Generuj 1 artykuł z {selectedIds.size} tematów</>}
             </button>
             <button
               onClick={() => setSelectedIds(new Set())}
@@ -1008,7 +1008,7 @@ function TopicsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
   );
 }
 
-// â”€â”€ Article Products Panel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Article Products Panel
 
 interface ArticleOption { id: string; title_pl: string; slug: string; }
 interface ProductOption { id: string; sku: string; name: string; category?: string; }
@@ -1023,7 +1023,7 @@ function ArticleProductsPanel({ onNotify }: { onNotify: (msg: string) => void })
   const [searching, setSearching] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Ĺaduj artykuĹ‚y przy mount
+  // Ładuj artykuły przy mount
   useEffect(() => {
     fetch('/api/articles?limit=100&status=all')
       .then(r => r.json())
@@ -1032,7 +1032,7 @@ function ArticleProductsPanel({ onNotify }: { onNotify: (msg: string) => void })
       ));
   }, []);
 
-  // Ĺaduj powiÄ…zane produkty gdy wybrany artykuĹ‚
+  // Ładuj powiązane produkty gdy wybrany artykuł
   const loadLinked = useCallback(async (articleId: string) => {
     setLoading(true);
     const res = await fetch(`/api/article-products?article_id=${articleId}`);
@@ -1048,7 +1048,7 @@ function ArticleProductsPanel({ onNotify }: { onNotify: (msg: string) => void })
     setSearchResults([]);
   };
 
-  // Szukaj produktĂłw po nazwie/SKU przez API (admin client, omija RLS)
+  // Szukaj produktów po nazwie/SKU przez API (admin client, omija RLS)
   useEffect(() => {
     if (productSearch.length < 2) { return; }
     const timer = setTimeout(async () => {
@@ -1076,14 +1076,14 @@ function ArticleProductsPanel({ onNotify }: { onNotify: (msg: string) => void })
       setProductSearch('');
       setSearchResults([]);
     } else {
-      onNotify(`BĹ‚Ä…d: ${data.error}`);
+      onNotify(`Błąd: ${data.error}`);
     }
   };
 
   const handleRemove = async (productId: string, productName: string) => {
     if (!selectedArticle) return;
     await fetch(`/api/article-products?article_id=${selectedArticle.id}&product_id=${productId}`, { method: 'DELETE' });
-    onNotify(`UsuniÄ™to: ${productName}`);
+    onNotify(`Usunięto: ${productName}`);
     loadLinked(selectedArticle.id);
   };
 
@@ -1093,16 +1093,16 @@ function ArticleProductsPanel({ onNotify }: { onNotify: (msg: string) => void })
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
       <div>
-        <h2 style={{ fontSize: '1.2rem', fontFamily: 'var(--font-body)', fontWeight: 600 }}>Produkty w artykuĹ‚ach</h2>
+        <h2 style={{ fontSize: '1.2rem', fontFamily: 'var(--font-body)', fontWeight: 600 }}>Produkty w artykułach</h2>
         <p style={{ fontSize: '0.8rem', color: 'var(--color-gray-muted)', marginTop: '0.25rem' }}>
-          Przypisz produkty B2B do artykuĹ‚Ăłw â€” pojawiÄ… siÄ™ w sidebarze na stronie artykuĹ‚u.
+          Przypisz produkty B2B do artykułów - pojawią się w sidebarze na stronie artykułu.
         </p>
       </div>
 
-      {/* WybĂłr artykuĹ‚u */}
+      {/* Wybór artykułu */}
       <div style={{ background: 'var(--color-black-card)', border: '1px solid var(--glass-border)', borderRadius: '12px', padding: '1.25rem' }}>
         <p style={{ fontSize: '0.78rem', color: 'var(--color-gold)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.75rem' }}>
-          1. Wybierz artykuĹ‚
+          1. Wybierz artykuł
         </p>
         <select
           value={selectedArticle?.id ?? ''}
@@ -1116,14 +1116,14 @@ function ArticleProductsPanel({ onNotify }: { onNotify: (msg: string) => void })
             fontFamily: 'var(--font-body)', fontSize: '0.875rem', cursor: 'pointer',
           }}
         >
-          <option value=''>â€” wybierz artykuĹ‚ â€”</option>
+          <option value=''>— wybierz artykuł —</option>
           {articles.map(a => <option key={a.id} value={a.id}>{a.title_pl}</option>)}
         </select>
       </div>
 
       {selectedArticle && (
         <>
-          {/* Wyszukiwarka produktĂłw */}
+          {/* Wyszukiwarka produktów */}
           <div style={{ background: 'var(--color-black-card)', border: '1px solid var(--glass-border)', borderRadius: '12px', padding: '1.25rem' }}>
             <p style={{ fontSize: '0.78rem', color: 'var(--color-gold)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.75rem' }}>
               2. Wyszukaj i dodaj produkt
@@ -1131,7 +1131,7 @@ function ArticleProductsPanel({ onNotify }: { onNotify: (msg: string) => void })
             <input
               value={productSearch}
               onChange={e => setProductSearch(e.target.value)}
-              placeholder="Wpisz nazwÄ™ lub SKU produktu..."
+              placeholder="Wpisz nazwę lub SKU produktu..."
               className="newsletter-input"
               style={{ width: '100%', marginBottom: '0.75rem' }}
             />
@@ -1149,7 +1149,7 @@ function ArticleProductsPanel({ onNotify }: { onNotify: (msg: string) => void })
                     }}>
                       <div style={{ flex: 1, minWidth: 0 }}>
                         <div style={{ fontSize: '0.85rem', color: 'var(--color-cream)', fontWeight: 500 }}>{p.name}</div>
-                        <div style={{ fontSize: '0.72rem', color: 'var(--color-gray-muted)' }}>SKU: {p.sku} {p.category ? `Â· ${p.category}` : ''}</div>
+                        <div style={{ fontSize: '0.72rem', color: 'var(--color-gray-muted)' }}>SKU: {p.sku} {p.category ? `· ${p.category}` : ''}</div>
                       </div>
                       {already
                         ? <CheckCircle size={16} color="#10b981" />
@@ -1169,15 +1169,15 @@ function ArticleProductsPanel({ onNotify }: { onNotify: (msg: string) => void })
             )}
           </div>
 
-          {/* Lista powiÄ…zanych produktĂłw */}
+          {/* Lista powiązanych produktów */}
           <div style={{ background: 'var(--color-black-card)', border: '1px solid var(--glass-border)', borderRadius: '12px', padding: '1.25rem' }}>
             <p style={{ fontSize: '0.78rem', color: 'var(--color-gold)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.75rem' }}>
-              Produkty w sidebarze artykuĹ‚u ({linked.length})
+              Produkty w sidebarze artykułu ({linked.length})
             </p>
             {loading
-              ? <p style={{ fontSize: '0.875rem', color: 'var(--color-gray-muted)' }}>Ĺadowanie...</p>
+              ? <p style={{ fontSize: '0.875rem', color: 'var(--color-gray-muted)' }}>Ładowanie...</p>
               : linked.length === 0
-              ? <p style={{ fontSize: '0.875rem', color: 'var(--color-gray-muted)' }}>Brak przypisanych produktĂłw. Wyszukaj i dodaj powyĹĽej.</p>
+              ? <p style={{ fontSize: '0.875rem', color: 'var(--color-gray-muted)' }}>Brak przypisanych produktów. Wyszukaj i dodaj powyżej.</p>
               : linked.map((l, i) => (
                   <div key={l.product_id} style={{
                     display: 'flex', alignItems: 'center', gap: '0.875rem',
@@ -1211,7 +1211,7 @@ function ArticleProductsPanel({ onNotify }: { onNotify: (msg: string) => void })
   );
 }
 
-// â”€â”€ Main Admin Panel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Inspirations Panel
 
 function InspirationsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
   const [items, setItems] = useState<InspirationAsset[]>([]);
@@ -1241,7 +1241,7 @@ function InspirationsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
       const response = await fetch('/api/admin/inspirations?limit=300&includeStats=1');
       const data = await response.json();
       if (!response.ok) {
-        throw new Error(data?.error ?? 'Blad ladowania inspiracji');
+        throw new Error(data?.error ?? 'Błąd ładowania inspiracji');
       }
       const rawItems = Array.isArray(data) ? data : (Array.isArray(data?.items) ? data.items : []);
       const statsFromApi = (!Array.isArray(data) && data?.storage) ? data.storage as InspirationStorageStats : null;
@@ -1273,7 +1273,7 @@ function InspirationsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
       });
     } catch (error) {
       console.error(error);
-      onNotify('Blad ladowania galerii inspiracji');
+      onNotify('Błąd ładowania galerii inspiracji');
     } finally {
       setLoading(false);
     }
@@ -1289,7 +1289,7 @@ function InspirationsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
       await navigator.clipboard.writeText(url);
       onNotify('Link skopiowany');
     } catch {
-      onNotify('Nie udalo sie skopiowac linku');
+      onNotify('Nie udało się skopiować linku');
     }
   };
 
@@ -1310,7 +1310,7 @@ function InspirationsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
   const handleUpload = async () => {
     const trimmedSourceUrls = sourceUrls.trim();
     if (files.length === 0 && !trimmedSourceUrls) {
-      onNotify('Wybierz pliki albo podaj linki URL do obrazow');
+      onNotify('Wybierz pliki albo podaj linki URL do obrazów');
       return;
     }
 
@@ -1340,24 +1340,24 @@ function InspirationsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
 
       const data = await response.json();
       if (!response.ok && response.status !== 207) {
-        throw new Error(data?.error ?? 'Blad uploadu');
+        throw new Error(data?.error ?? 'Błąd uploadu');
       }
 
       const createdCount = Number(data?.createdCount ?? 0);
       const failedCount = Number(data?.failedCount ?? 0);
       if (createdCount > 0 && failedCount > 0) {
-        onNotify(`Dodano ${createdCount} plikow, nieudane: ${failedCount}`);
+        onNotify(`Dodano ${createdCount} plików, nieudane: ${failedCount}`);
       } else if (createdCount > 0) {
-        onNotify(`Dodano ${createdCount} plikow`);
+        onNotify(`Dodano ${createdCount} plików`);
       } else {
-        onNotify(data?.error ?? 'Upload zakonczony bez zapisanych plikow');
+        onNotify(data?.error ?? 'Upload zakończony bez zapisanych plików');
       }
 
       resetUploadForm();
       await loadItems();
     } catch (error) {
       console.error(error);
-      onNotify(error instanceof Error ? error.message : 'Blad uploadu');
+      onNotify(error instanceof Error ? error.message : 'Błąd uploadu');
     } finally {
       setUploading(false);
     }
@@ -1371,14 +1371,14 @@ function InspirationsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
       });
       const data = await response.json();
       if (!response.ok || !data?.success) {
-        throw new Error(data?.error ?? 'Blad usuwania');
+        throw new Error(data?.error ?? 'Błąd usuwania');
       }
 
       setItems((prev) => prev.filter((entry) => entry.id !== item.id));
-      onNotify('Zdjecie usuniete');
+      onNotify('Zdjęcie usunięte');
     } catch (error) {
       console.error(error);
-      onNotify(error instanceof Error ? error.message : 'Blad usuwania');
+      onNotify(error instanceof Error ? error.message : 'Błąd usuwania');
     } finally {
       setDeletingId(null);
     }
@@ -1397,7 +1397,7 @@ function InspirationsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
       });
       const data = await response.json();
       if (!response.ok || !data?.success) {
-        throw new Error(data?.error ?? 'Blad zmiany statusu');
+        throw new Error(data?.error ?? 'Błąd zmiany statusu');
       }
 
       setItems((prev) => prev.map((entry) => (
@@ -1405,10 +1405,10 @@ function InspirationsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
           ? { ...entry, is_active: !item.is_active }
           : entry
       )));
-      onNotify(item.is_active ? 'Zdjecie ukryte' : 'Zdjecie aktywowane');
+      onNotify(item.is_active ? 'Zdjęcie ukryte' : 'Zdjęcie aktywowane');
     } catch (error) {
       console.error(error);
-      onNotify(error instanceof Error ? error.message : 'Blad zmiany statusu');
+      onNotify(error instanceof Error ? error.message : 'Błąd zmiany statusu');
     } finally {
       setTogglingId(null);
     }
@@ -1448,7 +1448,7 @@ function InspirationsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
 
       const data = await response.json();
       if (!response.ok || !data?.success) {
-        throw new Error(data?.error ?? 'Blad zapisu');
+        throw new Error(data?.error ?? 'Błąd zapisu');
       }
 
       const updatedItem = data.item as InspirationAsset;
@@ -1472,7 +1472,7 @@ function InspirationsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
       onNotify('Zmiany zapisane');
     } catch (error) {
       console.error(error);
-      onNotify(error instanceof Error ? error.message : 'Blad zapisu');
+      onNotify(error instanceof Error ? error.message : 'Błąd zapisu');
     } finally {
       setSavingId(null);
     }
@@ -1516,12 +1516,12 @@ function InspirationsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(175px, 1fr))', gap: '0.75rem' }}>
-        <StatCard icon={ImageIcon} label="Wszystkie zdjecia" value={items.length} color="var(--color-gold)" />
+        <StatCard icon={ImageIcon} label="Wszystkie zdjęcia" value={items.length} color="var(--color-gold)" />
         <StatCard icon={Eye} label="Aktywne" value={activeCount} color="#10b981" />
         <StatCard icon={EyeOff} label="Ukryte" value={items.length - activeCount} color="#6b7280" />
         <StatCard icon={Upload} label="Wybrane pliki" value={selectedCount} color="#3b82f6" />
         <StatCard icon={Link2} label="Linki URL" value={sourceUrlCount} color="#06b6d4" />
-        <StatCard icon={Package} label="Storage zajete" value={formatMbValue(storageStats?.usedMb)} color="#f59e0b" />
+        <StatCard icon={Package} label="Storage zajęte" value={formatMbValue(storageStats?.usedMb)} color="#f59e0b" />
         <StatCard icon={BarChart3} label="Storage wolne" value={formatMbValue(storageStats?.remainingMb)} color="#8b5cf6" />
       </div>
 
@@ -1529,9 +1529,9 @@ function InspirationsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
         {storageStats?.error
           ? `Storage stats: ${storageStats.error}`
           : storageStats?.quotaMb == null
-            ? 'Storage stats: ustaw INSPIRATIONS_BUCKET_QUOTA_MB lub INSPIRATIONS_BUCKET_QUOTA_BYTES w .env, aby liczyc "pozostalo".'
+            ? 'Storage stats: ustaw INSPIRATIONS_BUCKET_QUOTA_MB lub INSPIRATIONS_BUCKET_QUOTA_BYTES w .env, aby liczyć "pozostało".'
             : `Bucket: ${storageStats.bucket}, pliki: ${storageStats.filesCount}, wykorzystanie: ${storageStats.usagePercent ?? 'n/a'}%`}
-        {storageStats?.truncated ? ' (scan truncated - zwieksz INSPIRATIONS_STORAGE_SCAN_MAX_ITEMS)' : ''}
+        {storageStats?.truncated ? ' (scan truncated - zwiększ INSPIRATIONS_STORAGE_SCAN_MAX_ITEMS)' : ''}
       </p>
 
       <div style={{
@@ -1579,13 +1579,13 @@ function InspirationsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
           <input
             value={title}
             onChange={(event) => setTitle(event.target.value)}
-            placeholder="Tytul PL (opcjonalnie)"
+                placeholder="Tytuł PL (opcjonalnie)"
             className="newsletter-input"
           />
           <input
             value={titleEn}
             onChange={(event) => setTitleEn(event.target.value)}
-            placeholder="Tytul EN (opcjonalnie)"
+                placeholder="Tytuł EN (opcjonalnie)"
             className="newsletter-input"
           />
           <select
@@ -1676,12 +1676,12 @@ function InspirationsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
         </label>
 
         <p style={{ margin: 0, fontSize: '0.75rem', color: 'var(--color-gray-muted)' }}>
-          Wybrane pliki: {selectedCount > 0 ? `${selectedCount} (upload masowy)` : 'brak'} Â· linki URL: {sourceUrlCount}
+          Wybrane pliki: {selectedCount > 0 ? `${selectedCount} (upload masowy)` : 'brak'} · linki URL: {sourceUrlCount}
         </p>
 
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
           <p style={{ fontSize: '0.75rem', color: 'var(--color-gray-muted)' }}>
-            Zalecenie: min. 1600px szerokosci, format JPG/WEBP. Auto B2B mapuje tytuly i kategorie po SKU.
+            Zalecenie: min. 1600px szerokości, format JPG/WEBP. Auto B2B mapuje tytuły i kategorie po SKU.
           </p>
           <button
             onClick={handleUpload}
@@ -1702,9 +1702,9 @@ function InspirationsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
         padding: '1rem',
       }}>
         {loading ? (
-          <p style={{ color: 'var(--color-gray-muted)', padding: '0.5rem' }}>Ladowanie zdjec...</p>
+          <p style={{ color: 'var(--color-gray-muted)', padding: '0.5rem' }}>Ładowanie zdjęć...</p>
         ) : items.length === 0 ? (
-          <p style={{ color: 'var(--color-gray-muted)', padding: '0.5rem' }}>Brak zdjec w galerii inspiracji.</p>
+          <p style={{ color: 'var(--color-gray-muted)', padding: '0.5rem' }}>Brak zdjęć w galerii inspiracji.</p>
         ) : (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '0.9rem' }}>
             {items.map((item) => (
@@ -1747,14 +1747,14 @@ function InspirationsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
                   <input
                     value={edits[item.id]?.title ?? item.title ?? ''}
                     onChange={(event) => updateEditField(item, { title: event.target.value })}
-                    placeholder="Tytul PL"
+                      placeholder="Tytuł PL"
                     className="newsletter-input"
                     style={{ width: '100%' }}
                   />
                   <input
                     value={edits[item.id]?.title_en ?? item.title_en ?? ''}
                     onChange={(event) => updateEditField(item, { title_en: event.target.value })}
-                    placeholder="Tytul EN"
+                      placeholder="Tytuł EN"
                     className="newsletter-input"
                     style={{ width: '100%' }}
                   />
@@ -1867,7 +1867,7 @@ function InspirationsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
                       }}
                     >
                       {item.is_active ? <EyeOff size={12} /> : <Eye size={12} />}
-                      {item.is_active ? 'Ukryj' : 'Pokaz'}
+                      {item.is_active ? 'Ukryj' : 'Pokaż'}
                     </button>
                     <button
                       onClick={() => handleCopyUrl(item.url)}
@@ -1999,7 +1999,7 @@ export default function AdminPage() {
         topics: topicCountRes?.count ?? 0,
       });
     } catch {
-      showNotification('Blad ladowania danych');
+      showNotification('Błąd ładowania danych');
     } finally {
       setLoadingDrafts(false);
     }
@@ -2018,11 +2018,11 @@ export default function AdminPage() {
   };
 
   const handleGenerated = (draft: Draft) => {
-    handleDraftCreated(draft, 'Artykul wygenerowany i zapisany jako draft!');
+    handleDraftCreated(draft, 'Artykuł wygenerowany i zapisany jako draft!');
   };
 
   const handleManualCreated = (draft: Draft) => {
-    handleDraftCreated(draft, 'Artykul zapisany jako draft.');
+    handleDraftCreated(draft, 'Artykuł zapisany jako draft.');
   };
 
   const handleDeleteArticle = async (article: Draft) => {
@@ -2056,9 +2056,9 @@ export default function AdminPage() {
         scheduled: article.status === 'scheduled' ? Math.max(0, prev.scheduled - 1) : prev.scheduled,
         published: article.status === 'published' ? Math.max(0, prev.published - 1) : prev.published,
       }));
-      showNotification('Artykul usuniety (zarchiwizowany)');
+      showNotification('Artykuł usunięty (zarchiwizowany)');
     } else {
-      showNotification('BĹ‚Ä…d usuwania artykulu');
+      showNotification('Błąd usuwania artykułu');
     }
   };
 
@@ -2100,7 +2100,7 @@ export default function AdminPage() {
       const data = await res.json();
 
       if (!res.ok || !data.success) {
-        showNotification(`Blad zapisu obrazka: ${data.error ?? 'nieznany'}`);
+        showNotification(`Błąd zapisu obrazka: ${data.error ?? 'nieznany'}`);
         return;
       }
 
@@ -2112,7 +2112,7 @@ export default function AdminPage() {
         : item));
       showNotification('Cover image zapisany');
     } catch {
-      showNotification('Blad zapisu obrazka');
+      showNotification('Błąd zapisu obrazka');
     } finally {
       setSavingCoverImageId(null);
     }
@@ -2130,7 +2130,7 @@ export default function AdminPage() {
       };
 
       if (!payload.title_pl) {
-        showNotification('Tytul artykulu nie moze byc pusty');
+        showNotification('Tytuł artykułu nie może być pusty');
         return;
       }
 
@@ -2164,7 +2164,7 @@ export default function AdminPage() {
           cover_image: payload.cover_image || null,
         }
         : item));
-      showNotification('Zmiany artykulu zapisane');
+      showNotification('Zmiany artykułu zapisane');
     } catch {
       showNotification('Błąd zapisu artykułu');
     } finally {
@@ -2223,24 +2223,24 @@ export default function AdminPage() {
       try {
         data = raw ? JSON.parse(raw) : {};
       } catch {
-        data = { error: raw || 'Nieprawidlowa odpowiedz serwera' };
+        data = { error: raw || 'Nieprawidłowa odpowiedź serwera' };
       }
 
       if (res.ok) {
-        showNotification(`Sync: ${data.fetched} produktow, ${data.newProducts} nowych, ${data.topicsCreated} tematow, ${data.draftsCreated} draftow`);
+        showNotification(`Sync: ${data.fetched} produktów, ${data.newProducts} nowych, ${data.topicsCreated} tematów, ${data.draftsCreated} draftów`);
         loadData();
       } else {
-        showNotification(`Blad sync: ${data.error ?? 'nieznany'}`);
+        showNotification(`Błąd sync: ${data.error ?? 'nieznany'}`);
       }
     } catch {
-      showNotification('Blad polaczenia z sync API');
+      showNotification('Błąd połączenia z sync API');
     } finally {
       setSyncing(false);
     }
   };
 
   const tabs = [
-    { id: 'overview', label: 'Przeglad', icon: BarChart3 },
+    { id: 'overview', label: 'Przegląd', icon: BarChart3 },
     { id: 'drafts', label: `Drafty (${stats.drafts})`, icon: FileText },
     { id: 'published', label: `Opublikowane (${stats.published})`, icon: CheckCircle },
     { id: 'topics', label: `Tematy (${stats.topics})`, icon: Lightbulb },
@@ -2353,7 +2353,7 @@ export default function AdminPage() {
                 </button>
               </div>
               {loadingDrafts ? (
-                <p style={{ color: 'var(--color-gray-muted)', fontSize: '0.875rem' }}>Ladowanie...</p>
+                <p style={{ color: 'var(--color-gray-muted)', fontSize: '0.875rem' }}>Ładowanie...</p>
               ) : drafts.slice(0, 3).map(draft => (
                 <div key={draft.id} style={{
                   display: 'flex', alignItems: 'center', gap: '1rem',
@@ -2381,7 +2381,7 @@ export default function AdminPage() {
         {activeTab === 'drafts' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <h2 style={{ fontSize: '1.2rem', fontFamily: 'var(--font-body)', fontWeight: 600 }}>Tworzenie artykulow</h2>
+              <h2 style={{ fontSize: '1.2rem', fontFamily: 'var(--font-body)', fontWeight: 600 }}>Tworzenie artykułów</h2>
               <button onClick={() => setActiveTab('overview')} style={{
                 display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
                 padding: '0.55rem 0.95rem', borderRadius: '10px',
@@ -2389,7 +2389,7 @@ export default function AdminPage() {
                 color: 'var(--color-gray-muted)', cursor: 'pointer',
                 fontFamily: 'var(--font-body)', fontSize: '0.82rem',
               }}>
-                <BarChart3 size={13} /> Przeglad
+                <BarChart3 size={13} /> Przegląd
               </button>
             </div>
 
@@ -2397,11 +2397,11 @@ export default function AdminPage() {
             <ManualArticlePanel onCreated={handleManualCreated} />
 
             {loadingDrafts ? (
-              <p style={{ color: 'var(--color-gray-muted)' }}>Ladowanie...</p>
+              <p style={{ color: 'var(--color-gray-muted)' }}>Ładowanie...</p>
             ) : drafts.length === 0 ? (
               <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--color-gray-muted)' }}>
                 <FileText size={40} style={{ margin: '0 auto 1rem', opacity: 0.4, display: 'block' }} />
-                <p>Brak draftow. Wygeneruj artykul przez AI!</p>
+                <p>Brak draftów. Wygeneruj artykuł przez AI!</p>
               </div>
             ) : drafts.map(draft => (
               <motion.div key={draft.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} style={{
@@ -2420,7 +2420,7 @@ export default function AdminPage() {
                   </div>
                   <div style={{ fontSize: '0.75rem', color: 'var(--color-gray-muted)' }}>
                     Utworzono: {draft.created_at?.slice(0, 10)}
-                    {draft.scheduled_for && ` Â· Zaplanowany: ${draft.scheduled_for.slice(0, 10)}`}
+                    {draft.scheduled_for && ` · Zaplanowany: ${draft.scheduled_for.slice(0, 10)}`}
                   </div>
                   <div style={{ marginTop: '0.9rem', display: 'flex', gap: '0.6rem', alignItems: 'center', flexWrap: 'wrap' }}>
                     <input
@@ -2450,7 +2450,7 @@ export default function AdminPage() {
                     href={`/blog/${draft.slug ?? draft.id}?preview=1`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    title="PodglÄ…d draftu"
+                    title="Podgląd draftu"
                     style={{
                       padding: '0.5rem', borderRadius: '8px',
                       background: 'rgba(212,168,83,0.1)', border: '1px solid rgba(212,168,83,0.2)',
@@ -2681,7 +2681,7 @@ export default function AdminPage() {
                   fontFamily: 'var(--font-body)', fontWeight: 600,
                 }}>
                   <RefreshCw size={14} style={syncing ? { animation: 'spin 1s linear infinite' } : {}} />
-                  Sync produktow
+                  Sync produktów
                 </button>
                 <button onClick={() => handleSync(true)} disabled={syncing} className="btn-primary" style={{ padding: '0.65rem 1.25rem', fontSize: '0.875rem' }}>
                   <Zap size={14} /> Sync + AI Draft
@@ -2696,7 +2696,7 @@ export default function AdminPage() {
                   B2B XML Feed &middot; b2b.gedeonpolska.com
                 </p>
                 <p style={{ fontSize: '0.8rem', color: 'var(--color-gray-muted)' }}>
-                  1850 produktow &middot; Ostatni sync: 2026-03-31 &middot; ~14s &middot; Gemini 2.0 Flash
+                  1850 produktów &middot; Ostatni sync: 2026-03-31 &middot; ~14s &middot; Gemini 2.0 Flash
                 </p>
               </div>
             </div>
@@ -2704,8 +2704,8 @@ export default function AdminPage() {
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1rem' }}>
               {[
-                { title: 'Sync produktow', desc: 'Pobiera XML Feed, wykrywa nowe SKU (limit 10 000), zapisuje do pim_sync_log, generuje topic_suggestions.', color: '#6b7280', icon: RefreshCw },
-                { title: 'Sync + AI Draft', desc: 'Jak powyzej, plus generuje 3 drafty przez Gemini 2.0 Flash dla nowych produktow (max 3/run, rate-limit safe).', color: '#8b5cf6', icon: Sparkles },
+                { title: 'Sync produktów', desc: 'Pobiera XML Feed, wykrywa nowe SKU (limit 10 000), zapisuje do pim_sync_log, generuje topic_suggestions.', color: '#6b7280', icon: RefreshCw },
+                { title: 'Sync + AI Draft', desc: 'Jak powyżej, plus generuje 3 drafty przez Gemini 2.0 Flash dla nowych produktów (max 3/run, rate-limit safe).', color: '#8b5cf6', icon: Sparkles },
               ].map(({ title, desc, color, icon: Icon }) => (
                 <div key={title} style={{ background: 'var(--color-black-card)', border: '1px solid var(--glass-border)', borderRadius: '12px', padding: '1.25rem' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
@@ -2743,4 +2743,5 @@ export default function AdminPage() {
     </div>
   );
 }
+
 
