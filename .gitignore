@@ -23,6 +23,7 @@
 # misc
 .DS_Store
 *.pem
+/.claude.zip
 
 # debug
 npm-debug.log*
