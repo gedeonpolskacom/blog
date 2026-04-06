@@ -8,7 +8,7 @@ function isAuthorized(request: NextRequest) {
   return Boolean(secret) && authHeader === `Bearer ${secret}`;
 }
 
-export async function POST(request: NextRequest) {
+async function handleSendNewsletters(request: NextRequest) {
   if (!isAuthorized(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
@@ -48,4 +48,12 @@ export async function POST(request: NextRequest) {
     processedCount: results.length,
     jobs: results,
   });
+}
+
+export async function GET(request: NextRequest) {
+  return handleSendNewsletters(request);
+}
+
+export async function POST(request: NextRequest) {
+  return handleSendNewsletters(request);
 }

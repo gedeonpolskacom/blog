@@ -8,8 +8,7 @@ import { createClient } from '@supabase/supabase-js';
 import BlogPostClient from './BlogPostClient';
 import { resolveCoverImage } from '@/lib/article-cover';
 import { HOME_FEATURED_TAG } from '@/lib/homepage-featured';
-
-const BASE_URL = 'https://blog.gedeonpolska.com';
+import { SITE_URL } from '@/lib/site-url';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -68,8 +67,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
     const title = `${article.title_pl} | Blog Gedeon Polska`;
     const description = article.excerpt_pl ?? 'Artykuł na blogu Gedeon Polska — albumy, ramki, media fotograficzne.';
-    const imageUrl = resolveCoverImage(article) ?? `${BASE_URL}/og-default.jpg`;
-    const articleUrl = `${BASE_URL}/blog/${slug}`;
+    const imageUrl = resolveCoverImage(article) ?? `${SITE_URL}/og-default.jpg`;
+    const articleUrl = `${SITE_URL}/blog/${slug}`;
 
     return {
       title,

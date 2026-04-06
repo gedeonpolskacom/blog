@@ -1,16 +1,29 @@
 {
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.blog.gedeonpolska.com"
+        }
+      ],
+      "destination": "https://blog.gedeonpolska.com/$1",
+      "permanent": true
+    }
+  ],
   "crons": [
     {
       "path": "/api/b2b/sync",
-      "schedule": "0 * * * *"
+      "schedule": "0 3 * * *"
     },
     {
       "path": "/api/cron/publish-scheduled",
-      "schedule": "0 * * * *"
+      "schedule": "10 3 * * *"
     },
     {
       "path": "/api/cron/send-newsletters",
-      "schedule": "0 * * * *"
+      "schedule": "20 3 * * *"
     }
   ]
 }

@@ -7,7 +7,7 @@ function isAuthorized(request: NextRequest) {
   return Boolean(secret) && authHeader === `Bearer ${secret}`;
 }
 
-export async function POST(request: NextRequest) {
+async function handlePublishScheduled(request: NextRequest) {
   if (!isAuthorized(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
@@ -47,4 +47,12 @@ export async function POST(request: NextRequest) {
     publishedCount: scheduledArticles.length,
     articles: scheduledArticles,
   });
+}
+
+export async function GET(request: NextRequest) {
+  return handlePublishScheduled(request);
+}
+
+export async function POST(request: NextRequest) {
+  return handlePublishScheduled(request);
 }
