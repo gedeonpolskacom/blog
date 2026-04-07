@@ -1,14 +1,15 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
-import { Menu, X, BookOpen } from 'lucide-react';
+import { Menu, X, Moon, Sun } from 'lucide-react';
 import { clsx } from 'clsx';
 
 const navLinks = [
   { href: '/blog', label: 'Blog', labelEn: 'Blog' },
   { href: '/inspiracje', label: 'Inspiracje', labelEn: 'Inspiration' },
-  { href: '/nowosci', label: 'Nowości', labelEn: 'New Products' },
+  { href: '/nowosci', label: 'Nowosci', labelEn: 'New Products' },
   { href: '/kategorie/albumy', label: 'Albumy', labelEn: 'Albums' },
   { href: '/o-nas', label: 'O nas', labelEn: 'About' },
 ];
@@ -18,9 +19,22 @@ interface NavbarProps {
   onLangChange?: (lang: 'pl' | 'en') => void;
 }
 
+const THEME_STORAGE_KEY = 'gedeon-theme';
+
 export default function Navbar({ lang = 'pl', onLangChange }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const applyTheme = (nextTheme: 'dark' | 'light') => {
+    document.documentElement.setAttribute('data-theme', nextTheme);
+    document.body?.setAttribute('data-theme', nextTheme);
+    try {
+      window.localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+    } catch {
+      // Local storage may be unavailable in private mode.
+    }
+    document.cookie = `gedeon-theme=${nextTheme}; Path=/; Max-Age=31536000; SameSite=Lax`;
+  };
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -28,44 +42,50 @@ export default function Navbar({ lang = 'pl', onLangChange }: NavbarProps) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    try {
+      const savedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+      if (savedTheme === 'light' || savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        document.body?.setAttribute('data-theme', savedTheme);
+      }
+    } catch {
+      // no-op
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+    applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+  };
+
   return (
     <nav className={clsx('navbar', scrolled && 'scrolled')}>
       <div className="container-site">
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          {/* Logo */}
-          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', textDecoration: 'none' }}>
-            <div style={{
-              width: '36px', height: '36px',
-              background: 'var(--color-gold)',
-              borderRadius: '8px',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-            }}>
-              <BookOpen size={18} color="var(--color-black)" strokeWidth={2.5} />
-            </div>
-            <div>
-              <div style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: '1.1rem',
-                color: 'var(--color-cream)',
-                lineHeight: 1,
-              }}>
-                Gedeon
-              </div>
-              <div style={{
-                fontFamily: 'var(--font-body)',
-                fontSize: '0.65rem',
-                color: 'var(--color-gold)',
-                letterSpacing: '0.12em',
-                textTransform: 'uppercase',
-                lineHeight: 1,
-                marginTop: '2px',
-              }}>
-                Blog & Inspiracje
-              </div>
-            </div>
+          <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', textDecoration: 'none' }} aria-label="Gedeon Polska">
+            <span className="brand-logo-swap brand-image">
+              <Image
+                src="/brand/gedeonwh.png"
+                alt="Gedeon Polska"
+                width={240}
+                height={64}
+                priority
+                className="brand-logo-dark"
+                style={{ width: 'auto', height: '100%', objectFit: 'contain' }}
+              />
+              <Image
+                src="/brand/gedeon.png"
+                alt="Gedeon Polska"
+                width={240}
+                height={64}
+                priority
+                className="brand-logo-light"
+                style={{ width: 'auto', height: '100%', objectFit: 'contain' }}
+              />
+            </span>
           </Link>
 
-          {/* Desktop Nav */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }} className="hidden-mobile">
             {navLinks.map((link) => (
               <Link
@@ -87,9 +107,7 @@ export default function Navbar({ lang = 'pl', onLangChange }: NavbarProps) {
             ))}
           </div>
 
-          {/* Right Controls */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            {/* Language Toggle */}
             <div className="lang-toggle hidden-mobile">
               <button
                 className={clsx('lang-btn', lang === 'pl' && 'active')}
@@ -105,7 +123,17 @@ export default function Navbar({ lang = 'pl', onLangChange }: NavbarProps) {
               </button>
             </div>
 
-            {/* B2B CTA */}
+            <button
+              className="theme-btn"
+              type="button"
+              aria-label="Przelacz motyw"
+              title="Przelacz motyw"
+              onClick={toggleTheme}
+            >
+              <span className="theme-icon theme-icon-sun" aria-hidden="true"><Sun size={16} /></span>
+              <span className="theme-icon theme-icon-moon" aria-hidden="true"><Moon size={16} /></span>
+            </button>
+
             <a
               href="https://b2b.gedeonpolska.com"
               target="_blank"
@@ -113,10 +141,9 @@ export default function Navbar({ lang = 'pl', onLangChange }: NavbarProps) {
               className="btn-primary hidden-mobile"
               style={{ padding: '0.6rem 1.25rem', fontSize: '0.8rem' }}
             >
-              Platforma B2B →
+              Platforma B2B {'->'}
             </a>
 
-            {/* Mobile Toggle */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               style={{
@@ -131,11 +158,10 @@ export default function Navbar({ lang = 'pl', onLangChange }: NavbarProps) {
           </div>
         </div>
 
-        {/* Mobile Menu */}
         {mobileOpen && (
           <div style={{
             position: 'fixed', top: '64px', left: 0, right: 0, bottom: 0,
-            background: 'rgba(10,10,10,0.98)',
+            background: 'var(--surface-overlay-strong)',
             backdropFilter: 'blur(20px)',
             padding: '2rem',
             display: 'flex', flexDirection: 'column', gap: '1.5rem',
@@ -170,9 +196,19 @@ export default function Navbar({ lang = 'pl', onLangChange }: NavbarProps) {
               >
                 EN
               </button>
+              <button
+                className="theme-btn"
+                type="button"
+                aria-label="Przelacz motyw"
+                onClick={toggleTheme}
+                style={{ width: '42px', height: '42px' }}
+              >
+                <span className="theme-icon theme-icon-sun" aria-hidden="true"><Sun size={18} /></span>
+                <span className="theme-icon theme-icon-moon" aria-hidden="true"><Moon size={18} /></span>
+              </button>
             </div>
             <a href="https://b2b.gedeonpolska.com" className="btn-primary" target="_blank" rel="noopener noreferrer">
-              Platforma B2B →
+              Platforma B2B {'->'}
             </a>
           </div>
         )}
@@ -181,9 +217,29 @@ export default function Navbar({ lang = 'pl', onLangChange }: NavbarProps) {
       <style jsx>{`
         .hidden-mobile { display: flex; }
         .show-mobile { display: none; }
+        .theme-icon {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .theme-icon-moon {
+          display: none;
+        }
+        :global(html[data-theme="light"]) .theme-icon-sun {
+          display: none;
+        }
+        :global(html[data-theme="light"]) .theme-icon-moon {
+          display: inline-flex;
+        }
+        .brand-image {
+          height: 34px;
+        }
         @media (max-width: 768px) {
           .hidden-mobile { display: none !important; }
           .show-mobile { display: flex !important; }
+          .brand-image {
+            height: 30px;
+          }
         }
       `}</style>
     </nav>

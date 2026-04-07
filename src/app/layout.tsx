@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Serif_Display, Inter } from "next/font/google";
+import { cookies } from "next/headers";
 import "./globals.css";
 import "react-photo-album/masonry.css";
 import "yet-another-react-lightbox/styles.css";
@@ -55,16 +56,22 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  manifest: "/site.webmanifest",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+  const cookieTheme = cookieStore.get("gedeon-theme")?.value;
+  const initialTheme = cookieTheme === "light" ? "light" : "dark";
+
   return (
-    <html lang="pl" suppressHydrationWarning>
+    <html lang="pl" data-theme={initialTheme} suppressHydrationWarning>
       <body
+        data-theme={initialTheme}
         className={`${displayFont.variable} ${bodyFont.variable} antialiased`}
         suppressHydrationWarning
       >

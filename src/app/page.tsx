@@ -210,7 +210,7 @@ function FeaturedArticle({ article, lang }: { article: Article | null; lang: 'pl
                 minHeight: '420px',
                 position: 'relative',
                 background: coverImage
-                  ? `linear-gradient(180deg, rgba(10,10,10,0.2) 0%, rgba(10,10,10,0.6) 100%), url(${coverImage}) center / cover no-repeat`
+                  ? `linear-gradient(180deg, var(--image-overlay-soft) 0%, var(--image-overlay-hero) 100%), url(${coverImage}) center / cover no-repeat`
                   : (article.cover_color ?? 'linear-gradient(135deg, #1a1206 0%, #2d1f0a 50%, #1a1206 100%)'),
               }}
             >
@@ -371,7 +371,7 @@ function InspirationPreview({ lang, items, loading }: { lang: 'pl' | 'en'; items
                   gridColumn: i === 0 ? '1' : undefined,
                   gridRow: i === 0 ? '1 / 3' : undefined,
                   background: item.url
-                    ? `linear-gradient(180deg, rgba(10,10,10,0.12) 0%, rgba(10,10,10,0.55) 100%), url(${item.url}) center / cover no-repeat`
+                    ? `linear-gradient(180deg, var(--image-overlay-soft) 0%, var(--image-overlay-hero) 100%), url(${item.url}) center / cover no-repeat`
                     : '#1a1206',
                 }}
               >

@@ -1,7 +1,8 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
-import { BookOpen, ExternalLink, Share2, Camera, Mail } from 'lucide-react';
+import { ExternalLink, Share2, Camera, Mail } from 'lucide-react';
 
 const footerLinks = {
   blog: [
@@ -48,24 +49,26 @@ export default function Footer({ lang = 'pl' }: { lang?: 'pl' | 'en' }) {
         >
           {/* Brand */}
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', marginBottom: '1rem' }}>
-              <div style={{
-                width: '36px', height: '36px',
-                background: 'var(--color-gold)',
-                borderRadius: '8px',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-              }}>
-                <BookOpen size={18} color="var(--color-black)" />
-              </div>
-              <div>
-                <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.1rem', color: 'var(--color-cream)' }}>
-                  Gedeon
-                </div>
-                <div style={{ fontSize: '0.6rem', color: 'var(--color-gold)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
-                  Blog & Inspiracje
-                </div>
-              </div>
-            </div>
+            <Link href="/" aria-label="Gedeon Polska" style={{ display: 'inline-flex', marginBottom: '1rem' }}>
+              <span className="brand-logo-swap" style={{ height: '34px' }}>
+                <Image
+                  src="/brand/gedeonwh.png"
+                  alt="Gedeon Polska"
+                  width={220}
+                  height={60}
+                  className="brand-logo-dark"
+                  style={{ width: 'auto', height: '100%', objectFit: 'contain' }}
+                />
+                <Image
+                  src="/brand/gedeon.png"
+                  alt="Gedeon Polska"
+                  width={220}
+                  height={60}
+                  className="brand-logo-light"
+                  style={{ width: 'auto', height: '100%', objectFit: 'contain' }}
+                />
+              </span>
+            </Link>
             <p style={{ fontSize: '0.85rem', maxWidth: '220px', lineHeight: 1.7, marginBottom: '1.5rem' }}>
               {lang === 'pl'
                 ? 'Inspiracje i wiedza dla branży fotograficznej — od producenta z 25-letnią tradycją.'

@@ -56,7 +56,7 @@ export default function ArticleCard({ article, lang, index }: {
                   <div style={{
                     position: 'absolute',
                     inset: 0,
-                    background: 'linear-gradient(180deg, rgba(10,10,10,0.08) 0%, rgba(10,10,10,0.32) 100%)',
+                    background: 'linear-gradient(180deg, var(--image-overlay-soft) 0%, var(--surface-overlay-soft) 100%)',
                   }} />
                   <div style={{
                     position: 'absolute',
@@ -64,7 +64,7 @@ export default function ArticleCard({ article, lang, index }: {
                     borderRadius: '12px',
                     overflow: 'hidden',
                     border: '1px solid rgba(212,168,83,0.22)',
-                    background: 'rgba(10,10,10,0.28)',
+                    background: 'var(--image-frame-bg)',
                     boxShadow: '0 20px 45px rgba(0,0,0,0.45)',
                     display: 'flex',
                     alignItems: 'center',

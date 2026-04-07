@@ -358,7 +358,7 @@ export default function InspirationsPage() {
           overflow: hidden;
           border-radius: 16px;
           border: 1px solid var(--glass-border);
-          background: #0f0f0f;
+          background: var(--surface-card);
           transform: translateZ(0);
         }
 
@@ -396,7 +396,7 @@ export default function InspirationsPage() {
           position: absolute;
           inset: auto 0 0 0;
           padding: 1rem 1rem 1.1rem;
-          background: linear-gradient(to top, rgba(10, 10, 10, 0.92) 0%, rgba(10, 10, 10, 0.5) 45%, transparent 100%);
+          background: linear-gradient(to top, var(--surface-overlay) 0%, var(--surface-overlay-soft) 45%, transparent 100%);
           opacity: 0;
           transform: translateY(8px);
           transition: opacity 0.3s ease, transform 0.3s ease;
@@ -437,7 +437,7 @@ export default function InspirationsPage() {
           padding: 0.95rem 1rem;
           border-radius: 14px;
           border: 1px solid rgba(212, 168, 83, 0.3);
-          background: rgba(10, 10, 10, 0.7);
+          background: var(--surface-overlay-soft);
           backdrop-filter: blur(8px);
           -webkit-backdrop-filter: blur(8px);
         }

@@ -69,7 +69,7 @@ function ProductCard({ product, lang }: { product: Product; lang: 'pl' | 'en' })
       {/* Product visual */}
       <div style={{
         background: hasImage
-          ? 'linear-gradient(180deg, rgba(10,10,10,0.18) 0%, rgba(10,10,10,0.38) 100%)'
+          ? 'linear-gradient(180deg, var(--image-overlay-soft) 0%, var(--surface-overlay-soft) 100%)'
           : coverColor,
         aspectRatio: '4 / 3',
         minHeight: '180px',

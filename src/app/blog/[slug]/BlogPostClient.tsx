@@ -1233,7 +1233,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
             <div style={{
               border: '1px solid rgba(212,168,83,0.35)',
               borderRadius: '14px',
-              background: 'rgba(10,10,10,0.72)',
+              background: 'var(--surface-overlay-soft)',
               padding: '0.9rem',
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
@@ -1649,7 +1649,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
 
                 {/* Hero */}
         <div style={{
-          background: 'var(--color-black)',
+          background: 'var(--surface-page)',
           borderBottom: '1px solid var(--glass-border)',
         }}>
           <div className="container-site" style={{ paddingTop: '1rem', paddingBottom: '1.5rem' }}>
@@ -1743,7 +1743,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
                 borderRadius: '18px',
                 overflow: 'hidden',
                 border: '1px solid rgba(212,168,83,0.24)',
-                background: 'rgba(10,10,10,0.45)',
+                background: 'var(--surface-overlay-soft)',
                 minHeight: heroImageHeight,
                 display: 'flex',
                 alignItems: 'center',
@@ -1847,7 +1847,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
                           aspectRatio: galleryAspectRatio,
                           borderRadius: '12px',
                           overflow: 'hidden',
-                          background: 'rgba(10,10,10,0.32)',
+                          background: 'var(--image-overlay-soft)',
                         }}
                       >
                         <img
@@ -2021,7 +2021,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
                       borderRadius: '14px',
                       overflow: 'hidden',
                       border: '1px solid var(--glass-border)',
-                      background: 'rgba(10,10,10,0.35)',
+                      background: 'var(--image-overlay-soft)',
                     }}
                   >
                     <img
@@ -2093,7 +2093,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
           border: 1px solid rgba(212,168,83,0.2);
           border-radius: 16px;
           padding: 1.4rem;
-          background: rgba(10,10,10,0.35);
+          background: var(--image-overlay-soft);
           display: flex;
           align-items: center;
         }

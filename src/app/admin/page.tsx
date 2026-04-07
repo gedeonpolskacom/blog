@@ -3,6 +3,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   PenLine, Sparkles, Calendar, Package, BarChart3,
@@ -2262,13 +2263,26 @@ export default function AdminPage() {
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <div style={{
-            width: '32px', height: '32px',
-            background: 'var(--color-gold)', borderRadius: '8px',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-          }}>
-            <BookOpen size={16} color="black" />
-          </div>
+          <span className="brand-logo-swap" style={{ height: '30px' }}>
+            <Image
+              src="/brand/gedeonwh.png"
+              alt="Gedeon Polska"
+              width={186}
+              height={48}
+              className="brand-logo-dark"
+              style={{ width: 'auto', height: '100%', objectFit: 'contain' }}
+              priority
+            />
+            <Image
+              src="/brand/gedeon.png"
+              alt="Gedeon Polska"
+              width={186}
+              height={48}
+              className="brand-logo-light"
+              style={{ width: 'auto', height: '100%', objectFit: 'contain' }}
+              priority
+            />
+          </span>
           <div>
             <div style={{ fontSize: '0.925rem', fontWeight: 700, color: 'var(--color-cream)' }}>Gedeon Blog Admin</div>
             <div style={{ fontSize: '0.72rem', color: 'var(--color-gray-muted)' }}>Panel zarzadzania contentem</div>
