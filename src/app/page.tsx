@@ -133,7 +133,7 @@ function HeroSection({ lang }: { lang: 'pl' | 'en' }) {
         >
           <div className="badge" style={{ marginBottom: '1.5rem' }}>
             <Sparkles size={12} />
-            {lang === 'pl' ? 'Gedeon Polska - Blog branżowy' : 'Gedeon Polska - Industry Blog'}
+            {lang === 'pl' ? 'Gedeon - Blog branżowy' : 'Gedeon - Industry Blog'}
           </div>
 
           <h1 style={{ marginBottom: '1.5rem' }}>
@@ -558,3 +558,4 @@ export default function HomePage() {
     </>
   );
 }
+

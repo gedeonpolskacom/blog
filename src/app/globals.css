@@ -1,7 +1,7 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
 
 /* ============================================
-   GEDEON POLSKA — Design System Tokens
+   GEDEON â€” Design System Tokens
    Premium Photography B2B/B2C Blog
    ============================================ */
 
@@ -75,8 +75,8 @@
   --surface-overlay-strong: rgba(247, 242, 232, 0.98);
   --surface-overlay-soft: rgba(247, 242, 232, 0.84);
   --image-overlay-soft: rgba(247, 242, 232, 0.32);
-  --image-overlay-strong: rgba(247, 242, 232, 0.72);
-  --image-overlay-hero: rgba(247, 242, 232, 0.62);
+  --image-overlay-strong: rgba(247, 242, 232, 0.52);
+  --image-overlay-hero: rgba(247, 242, 232, 0.26);
   --image-frame-bg: rgba(247, 242, 232, 0.36);
   --input-bg: rgba(255, 255, 255, 0.92);
   --empty-surface-bg: rgba(255, 255, 255, 0.7);
@@ -655,6 +655,8 @@ a {
 
 .brand-logo-light {
   display: none;
+  transform: scale(0.9);
+  transform-origin: left center;
 }
 
 [data-theme="light"] .brand-logo-dark {
@@ -673,3 +675,4 @@ a {
   .masonry-grid { columns: 1; }
   .hero-section { min-height: 85vh; }
 }
+

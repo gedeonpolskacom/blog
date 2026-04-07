@@ -63,11 +63,11 @@ export default function Navbar({ lang = 'pl', onLangChange }: NavbarProps) {
     <nav className={clsx('navbar', scrolled && 'scrolled')}>
       <div className="container-site">
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', textDecoration: 'none' }} aria-label="Gedeon Polska">
+          <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', textDecoration: 'none' }} aria-label="Gedeon">
             <span className="brand-logo-swap brand-image">
               <Image
-                src="/brand/gedeonwh.png"
-                alt="Gedeon Polska"
+                src="/brand/gedeonwh_1.png"
+                alt="Gedeon"
                 width={240}
                 height={64}
                 priority
@@ -76,7 +76,7 @@ export default function Navbar({ lang = 'pl', onLangChange }: NavbarProps) {
               />
               <Image
                 src="/brand/gedeon.png"
-                alt="Gedeon Polska"
+                alt="Gedeon"
                 width={240}
                 height={64}
                 priority

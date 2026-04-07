@@ -49,11 +49,11 @@ export default function Footer({ lang = 'pl' }: { lang?: 'pl' | 'en' }) {
         >
           {/* Brand */}
           <div>
-            <Link href="/" aria-label="Gedeon Polska" style={{ display: 'inline-flex', marginBottom: '1rem' }}>
+            <Link href="/" aria-label="Gedeon" style={{ display: 'inline-flex', marginBottom: '1rem' }}>
               <span className="brand-logo-swap" style={{ height: '34px' }}>
                 <Image
-                  src="/brand/gedeonwh.png"
-                  alt="Gedeon Polska"
+                  src="/brand/gedeonwh_1.png"
+                  alt="Gedeon"
                   width={220}
                   height={60}
                   className="brand-logo-dark"
@@ -61,7 +61,7 @@ export default function Footer({ lang = 'pl' }: { lang?: 'pl' | 'en' }) {
                 />
                 <Image
                   src="/brand/gedeon.png"
-                  alt="Gedeon Polska"
+                  alt="Gedeon"
                   width={220}
                   height={60}
                   className="brand-logo-light"
@@ -150,7 +150,7 @@ export default function Footer({ lang = 'pl' }: { lang?: 'pl' | 'en' }) {
           {/* Gedeon Links */}
           <div>
             <h5 style={{ fontFamily: 'var(--font-body)', fontWeight: 600, fontSize: '0.8rem', color: 'var(--color-gold)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '1.25rem' }}>
-              Gedeon Polska
+              Gedeon
             </h5>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.625rem' }}>
               {footerLinks.gedeon.map((link) => (

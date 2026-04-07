@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+﻿/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import { useState, useEffect, type SyntheticEvent } from 'react';
@@ -20,7 +20,7 @@ interface Product {
   isNew: boolean;
 }
 
-// Category → gradient color map
+// Category â†’ gradient color map
 const CATEGORY_COLORS: Record<string, string> = {
   Albumy: 'linear-gradient(135deg, #1a1218 0%, #2d1a2a 100%)',
   Ramki: 'linear-gradient(135deg, #1a1806 0%, #2d2c0a 100%)',
@@ -110,7 +110,7 @@ function ProductCard({ product, lang }: { product: Product; lang: 'pl' | 'en' })
               padding: '0.2rem 0.65rem', borderRadius: '100px',
               fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.06em',
             }}>
-              {lang === 'pl' ? 'Dostępny' : 'In Stock'}
+              {lang === 'pl' ? 'DostÄ™pny' : 'In Stock'}
             </span>
           )}
           <span className="badge" style={{ fontSize: '0.68rem', padding: '0.2rem 0.65rem' }}>
@@ -137,7 +137,7 @@ function ProductCard({ product, lang }: { product: Product; lang: 'pl' | 'en' })
           className="btn-primary"
           style={{ padding: '0.65rem 1.25rem', fontSize: '0.85rem', width: '100%', justifyContent: 'center' }}
         >
-          {lang === 'pl' ? 'Zamów w B2B' : 'Order in B2B'}
+          {lang === 'pl' ? 'ZamĂłw w B2B' : 'Order in B2B'}
           <ArrowRight size={14} />
         </a>
       </div>
@@ -161,11 +161,11 @@ export default function NowosciPage() {
         if (data.products) {
           setProducts(data.products);
         } else {
-          setError(lang === 'pl' ? 'Nie udało się załadować produktów.' : 'Failed to load products.');
+          setError(lang === 'pl' ? 'Nie udaĹ‚o siÄ™ zaĹ‚adowaÄ‡ produktĂłw.' : 'Failed to load products.');
         }
       })
       .catch(() => {
-        setError(lang === 'pl' ? 'Błąd połączenia z B2B.' : 'B2B connection error.');
+        setError(lang === 'pl' ? 'BĹ‚Ä…d poĹ‚Ä…czenia z B2B.' : 'B2B connection error.');
       })
       .finally(() => setLoading(false));
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -186,7 +186,7 @@ export default function NowosciPage() {
             <motion.div initial={{ opacity: 0, y: 25 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
               <div className="badge" style={{ marginBottom: '1.25rem' }}>
                 <Package size={12} />
-                {lang === 'pl' ? 'Nowości Produktowe' : 'New Products'}
+                {lang === 'pl' ? 'NowoĹ›ci Produktowe' : 'New Products'}
               </div>
               <h1 style={{ marginBottom: '0.75rem' }}>
                 {lang === 'pl' ? (
@@ -197,8 +197,8 @@ export default function NowosciPage() {
               </h1>
               <p style={{ maxWidth: '560px', fontSize: '1.05rem', marginBottom: '2rem' }}>
                 {lang === 'pl'
-                  ? 'Najświeższe nowości produktowe — albumy, ramki i media. Automatycznie dostępne po przyjęciu do naszego katalogu.'
-                  : 'The latest product news — albums, frames and media. Automatically available once added to our catalog.'}
+                  ? 'NajĹ›wieĹĽsze nowoĹ›ci produktowe â€” albumy, ramki i media. Automatycznie dostÄ™pne po przyjÄ™ciu do naszego katalogu.'
+                  : 'The latest product news â€” albums, frames and media. Automatically available once added to our catalog.'}
               </p>
 
               {/* Alert signup */}
@@ -212,12 +212,12 @@ export default function NowosciPage() {
                 <Bell size={18} color="var(--color-gold)" style={{ flexShrink: 0 }} />
                 <p style={{ fontSize: '0.875rem', flex: 1, margin: 0 }}>
                   {lang === 'pl'
-                    ? 'Otrzymuj powiadomienie o każdej nowości na email:'
+                    ? 'Otrzymuj powiadomienie o kaĹĽdej nowoĹ›ci na email:'
                     : 'Get notified of every new product by email:'}
                 </p>
                 {alertSubmitted ? (
                   <span style={{ color: 'var(--color-gold)', fontWeight: 600, fontSize: '0.9rem' }}>
-                    ✓ {lang === 'pl' ? 'Zapisano!' : 'Subscribed!'}
+                    âś“ {lang === 'pl' ? 'Zapisano!' : 'Subscribed!'}
                   </span>
                 ) : (
                   <form onSubmit={(e) => { e.preventDefault(); if (emailAlert) setAlertSubmitted(true); }} style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
@@ -244,7 +244,7 @@ export default function NowosciPage() {
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
               <div style={{ width: '4px', height: '28px', background: 'var(--color-gold)', borderRadius: '2px' }} />
               <h2 style={{ fontSize: '1.6rem' }}>
-                {lang === 'pl' ? 'Katalog Produktów' : 'Product Catalogue'}
+                {lang === 'pl' ? 'Katalog ProduktĂłw' : 'Product Catalogue'}
               </h2>
               <div style={{
                 marginLeft: 'auto',
@@ -259,7 +259,7 @@ export default function NowosciPage() {
             {loading && (
               <div style={{ textAlign: 'center', padding: '4rem', color: 'var(--color-gray-muted)' }}>
                 <Loader2 size={28} style={{ animation: 'spin 1s linear infinite', marginBottom: '0.75rem' }} />
-                <p>{lang === 'pl' ? 'Ładowanie produktów…' : 'Loading products…'}</p>
+                <p>{lang === 'pl' ? 'Ĺadowanie produktĂłwâ€¦' : 'Loading productsâ€¦'}</p>
               </div>
             )}
 
@@ -271,7 +271,7 @@ export default function NowosciPage() {
               }}>
                 <p>{error}</p>
                 <a href="https://b2b.gedeonpolska.com" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ marginTop: '1rem', display: 'inline-flex' }}>
-                  {lang === 'pl' ? 'Przeglądaj katalog B2B' : 'Browse B2B catalogue'}
+                  {lang === 'pl' ? 'PrzeglÄ…daj katalog B2B' : 'Browse B2B catalogue'}
                   <ArrowRight size={14} />
                 </a>
               </div>
@@ -283,7 +283,7 @@ export default function NowosciPage() {
                 background: 'var(--color-black-card)', borderRadius: '16px',
                 border: '1px solid var(--glass-border)', color: 'var(--color-gray-muted)',
               }}>
-                <p>{lang === 'pl' ? 'Brak produktów do wyświetlenia.' : 'No products available.'}</p>
+                <p>{lang === 'pl' ? 'Brak produktĂłw do wyĹ›wietlenia.' : 'No products available.'}</p>
               </div>
             )}
 
@@ -298,15 +298,15 @@ export default function NowosciPage() {
             {/* CTA to B2B */}
             <div style={{ textAlign: 'center', marginTop: '3rem', padding: '2.5rem', background: 'var(--color-black-card)', borderRadius: '20px', border: '1px solid var(--glass-border)' }}>
               <h3 style={{ marginBottom: '0.75rem' }}>
-                {lang === 'pl' ? 'Pełny katalog Gedeon Polska' : 'Full Gedeon Polska catalog'}
+                {lang === 'pl' ? 'PeĹ‚ny katalog Gedeon' : 'Full Gedeon catalog'}
               </h3>
               <p style={{ marginBottom: '1.5rem', maxWidth: '400px', margin: '0 auto 1.5rem' }}>
                 {lang === 'pl'
-                  ? 'Ponad 3000 produktów dostępnych od ręki w ilościach hurtowych na platformie B2B.'
+                  ? 'Ponad 3000 produktĂłw dostÄ™pnych od rÄ™ki w iloĹ›ciach hurtowych na platformie B2B.'
                   : 'Over 3,000 products available immediately in wholesale quantities on the B2B platform.'}
               </p>
               <a href="https://b2b.gedeonpolska.com" target="_blank" rel="noopener noreferrer" className="btn-primary">
-                {lang === 'pl' ? 'Otwórz katalog B2B' : 'Open B2B catalog'}
+                {lang === 'pl' ? 'OtwĂłrz katalog B2B' : 'Open B2B catalog'}
                 <ArrowRight size={15} />
               </a>
             </div>
@@ -318,11 +318,11 @@ export default function NowosciPage() {
           <div className="container-site">
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2.5rem' }}>
               <div style={{ width: '4px', height: '28px', background: 'var(--color-gold)', borderRadius: '2px' }} />
-              <h3>{lang === 'pl' ? 'Powiązane Artykuły' : 'Related Articles'}</h3>
+              <h3>{lang === 'pl' ? 'PowiÄ…zane ArtykuĹ‚y' : 'Related Articles'}</h3>
             </div>
             <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--color-gray-muted)', fontSize: '0.9rem' }}>
               <Link href="/blog" style={{ color: 'var(--color-gold)', textDecoration: 'none' }}>
-                {lang === 'pl' ? 'Przejdź do Bloga →' : 'Go to Blog →'}
+                {lang === 'pl' ? 'PrzejdĹş do Bloga â†’' : 'Go to Blog â†’'}
               </Link>
             </div>
           </div>
@@ -337,3 +337,4 @@ export default function NowosciPage() {
     </>
   );
 }
+

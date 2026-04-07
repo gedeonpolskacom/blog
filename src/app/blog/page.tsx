@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
@@ -49,7 +49,7 @@ function toCardShape(a: Article) {
 }
 
 const TRENDING_TOPICS = [
-  'Albumy Lniane', 'DryLab 2026', 'Trendy Ślubne', 'KODAK Satin', 'Studio Komunia', 'Ramki Drewniane',
+  'Albumy Lniane', 'DryLab 2026', 'Trendy Ĺšlubne', 'KODAK Satin', 'Studio Komunia', 'Ramki Drewniane',
 ];
 
 export default function BlogPage() {
@@ -110,15 +110,15 @@ export default function BlogPage() {
               </div>
               <h1 style={{ marginBottom: '0.75rem' }}>
                 {lang === 'pl' ? (
-                  <>Wiedza dla <span className="gradient-text-gold">Branży Foto</span></>
+                  <>Wiedza dla <span className="gradient-text-gold">BranĹĽy Foto</span></>
                 ) : (
                   <>Knowledge for the <span className="gradient-text-gold">Photo Industry</span></>
                 )}
               </h1>
               <p style={{ fontSize: '1.05rem', maxWidth: '560px', marginBottom: '2.5rem' }}>
                 {lang === 'pl'
-                  ? 'Artykuły, poradniki i nowości produktowe od Gedeon Polska — producenta albumów, ramek i mediów fotograficznych.'
-                  : 'Articles, guides and product news from Gedeon Polska — manufacturer of albums, frames and photo media.'}
+                  ? 'ArtykuĹ‚y, poradniki i nowoĹ›ci produktowe od Gedeon â€” producenta albumĂłw, ramek i mediĂłw fotograficznych.'
+                  : 'Articles, guides and product news from Gedeon â€” manufacturer of albums, frames and photo media.'}
               </p>
             </motion.div>
 
@@ -135,7 +135,7 @@ export default function BlogPage() {
                   setSearchQuery(e.target.value);
                   setCurrentPage(1);
                 }}
-                placeholder={lang === 'pl' ? 'Szukaj artykułów...' : 'Search articles...'}
+                placeholder={lang === 'pl' ? 'Szukaj artykuĹ‚Ăłw...' : 'Search articles...'}
                 className="newsletter-input"
                 style={{ paddingLeft: '2.75rem' }}
               />
@@ -212,9 +212,9 @@ export default function BlogPage() {
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
                 <Filter size={14} color="var(--color-gold)" />
                 <span style={{ fontSize: '0.85rem', color: 'var(--color-gray-muted)' }}>
-                  {filtered.length} {lang === 'pl' ? 'artykułów' : 'articles'}
-                  {activeCategory !== 'all' && ` · ${activeCategory}`}
-                  {searchQuery && ` · "${searchQuery}"`}
+                  {filtered.length} {lang === 'pl' ? 'artykuĹ‚Ăłw' : 'articles'}
+                  {activeCategory !== 'all' && ` Â· ${activeCategory}`}
+                  {searchQuery && ` Â· "${searchQuery}"`}
                 </span>
               </div>
               {(searchQuery || activeCategory !== 'all') && (
@@ -225,7 +225,7 @@ export default function BlogPage() {
                     border: 'none', cursor: 'pointer', fontFamily: 'var(--font-body)',
                   }}
                 >
-                  ✕ {lang === 'pl' ? 'Wyczyść filtry' : 'Clear filters'}
+                  âś• {lang === 'pl' ? 'WyczyĹ›Ä‡ filtry' : 'Clear filters'}
                 </button>
               )}
             </div>
@@ -241,15 +241,15 @@ export default function BlogPage() {
                 {loading ? (
                   <div style={{ textAlign: 'center', padding: '5rem 2rem', color: 'var(--color-gray-muted)' }}>
                     <Sparkles size={48} color="var(--color-gold)" style={{ margin: '0 auto 1.5rem', opacity: 0.3 }} />
-                    <p>{lang === 'pl' ? 'Ładowanie artykułów…' : 'Loading articles…'}</p>
+                    <p>{lang === 'pl' ? 'Ĺadowanie artykuĹ‚Ăłwâ€¦' : 'Loading articlesâ€¦'}</p>
                   </div>
                 ) : filtered.length === 0 ? (
                   <div style={{ textAlign: 'center', padding: '5rem 2rem' }}>
                     <Sparkles size={48} color="var(--color-gold)" style={{ margin: '0 auto 1.5rem', opacity: 0.4 }} />
                     <h3 style={{ marginBottom: '0.75rem', fontSize: '1.5rem' }}>
-                      {lang === 'pl' ? 'Brak wyników' : 'No results'}
+                      {lang === 'pl' ? 'Brak wynikĂłw' : 'No results'}
                     </h3>
-                    <p>{lang === 'pl' ? 'Spróbuj innego wyszukiwania lub kategorii.' : 'Try a different search or category.'}</p>
+                    <p>{lang === 'pl' ? 'SprĂłbuj innego wyszukiwania lub kategorii.' : 'Try a different search or category.'}</p>
                   </div>
                 ) : (
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.5rem' }}>
@@ -280,7 +280,7 @@ export default function BlogPage() {
                     fontSize: '0.84rem',
                   }}
                 >
-                  {lang === 'pl' ? '← Poprzednia' : '← Previous'}
+                  {lang === 'pl' ? 'â† Poprzednia' : 'â† Previous'}
                 </button>
                 <span style={{ fontSize: '0.85rem', color: 'var(--color-gray-muted)' }}>
                   {lang === 'pl'
@@ -301,7 +301,7 @@ export default function BlogPage() {
                     fontSize: '0.84rem',
                   }}
                 >
-                  {lang === 'pl' ? 'Następna →' : 'Next →'}
+                  {lang === 'pl' ? 'NastÄ™pna â†’' : 'Next â†’'}
                 </button>
               </div>
             )}
@@ -322,15 +322,15 @@ export default function BlogPage() {
               }}>
                 <span className="badge">B2B</span>
                 <h3 style={{ fontSize: '1.5rem' }}>
-                  {lang === 'pl' ? 'Platforma dla Hurtowników' : 'Wholesale Platform'}
+                  {lang === 'pl' ? 'Platforma dla HurtownikĂłw' : 'Wholesale Platform'}
                 </h3>
                 <p>
                   {lang === 'pl'
-                    ? 'Albumy, ramki, DryLab media i papier KODAK — zamów hurtowo dla Twojego studia lub sklepu.'
-                    : 'Albums, frames, DryLab media and KODAK paper — order wholesale for your studio or shop.'}
+                    ? 'Albumy, ramki, DryLab media i papier KODAK â€” zamĂłw hurtowo dla Twojego studia lub sklepu.'
+                    : 'Albums, frames, DryLab media and KODAK paper â€” order wholesale for your studio or shop.'}
                 </p>
                 <a href="https://b2b.gedeonpolska.com" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ alignSelf: 'flex-start' }}>
-                  {lang === 'pl' ? 'Otwórz platformę B2B' : 'Open B2B Platform'}
+                  {lang === 'pl' ? 'OtwĂłrz platformÄ™ B2B' : 'Open B2B Platform'}
                   <ArrowRight size={15} />
                 </a>
               </div>
@@ -347,11 +347,11 @@ export default function BlogPage() {
                 </h3>
                 <p>
                   {lang === 'pl'
-                    ? 'Przeglądaj zdjęcia naszych produktów w akcji — albumy, ramki i media pięknie sfotografowane.'
-                    : 'Browse photos of our products in action — albums, frames and media beautifully photographed.'}
+                    ? 'PrzeglÄ…daj zdjÄ™cia naszych produktĂłw w akcji â€” albumy, ramki i media piÄ™knie sfotografowane.'
+                    : 'Browse photos of our products in action â€” albums, frames and media beautifully photographed.'}
                 </p>
                 <Link href="/inspiracje" className="btn-ghost" style={{ alignSelf: 'flex-start' }}>
-                  {lang === 'pl' ? 'Zobacz galerię' : 'View gallery'}
+                  {lang === 'pl' ? 'Zobacz galeriÄ™' : 'View gallery'}
                   <ArrowRight size={15} />
                 </Link>
               </div>
@@ -371,3 +371,4 @@ export default function BlogPage() {
     </>
   );
 }
+

@@ -1913,7 +1913,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
                     {article.author}
                   </div>
                   <div style={{ fontSize: '0.825rem', color: 'var(--color-gold)' }}>
-                    {article.authorRole} · Gedeon Polska
+                    {article.authorRole} · Gedeon
                   </div>
                 </div>
               </div>
@@ -1938,7 +1938,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
                   borderRadius: '16px', padding: '1.5rem', textAlign: 'center',
                 }}>
                   <div style={{ fontSize: '0.72rem', color: 'var(--color-gold)', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.75rem' }}>
-                    Gedeon Polska
+                    Gedeon
                   </div>
                   <h4 style={{ fontSize: '1rem', marginBottom: '0.75rem' }}>
                     {lang === 'pl' ? 'Zamów produkty hurtowo' : 'Order wholesale products'}

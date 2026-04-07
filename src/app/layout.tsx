@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { DM_Serif_Display, Inter } from "next/font/google";
 import { cookies } from "next/headers";
 import "./globals.css";
@@ -21,42 +21,50 @@ const bodyFont = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "Gedeon Polska Blog — Inspiracje dla Profesjonalistów Foto",
-    template: "%s | Gedeon Polska Blog",
+    default: "Gedeon Blog â€” Inspiracje dla ProfesjonalistĂłw Foto",
+    template: "%s | Gedeon Blog",
   },
   description:
-    "Blog i galeria inspiracji dla studiów fotograficznych, sklepów foto i minilabów. Nowości produktowe, trendy, poradniki od Gedeon Polska — producenta albumów, ramek i mediów foto.",
+    "Blog i galeria inspiracji dla studiĂłw fotograficznych, sklepĂłw foto i minilabĂłw. NowoĹ›ci produktowe, trendy, poradniki od Gedeon â€” producenta albumĂłw, ramek i mediĂłw foto.",
   keywords: [
     "albumy fotograficzne",
-    "ramki do zdjęć",
+    "ramki do zdjÄ™Ä‡",
     "papier fotograficzny",
     "drylab media",
     "studio fotograficzne",
-    "Gedeon Polska",
+    "Gedeon",
     "B2B foto",
     "hurtownia foto",
   ],
-  authors: [{ name: "Gedeon Polska" }],
-  creator: "Gedeon Polska",
+  authors: [{ name: "Gedeon" }],
+  creator: "Gedeon",
   openGraph: {
     type: "website",
     locale: "pl_PL",
     alternateLocale: ["en_US"],
-    siteName: "Gedeon Polska Blog",
-    title: "Gedeon Polska Blog — Inspiracje dla Profesjonalistów Foto",
+    siteName: "Gedeon Blog",
+    title: "Gedeon Blog â€” Inspiracje dla ProfesjonalistĂłw Foto",
     description:
-      "Blog i galeria inspiracji dla branży fotograficznej. Nowości, trendy, poradniki.",
+      "Blog i galeria inspiracji dla branĹĽy fotograficznej. NowoĹ›ci, trendy, poradniki.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Gedeon Polska Blog",
-    description: "Inspiracje dla profesjonalistów foto",
+    title: "Gedeon Blog",
+    description: "Inspiracje dla profesjonalistĂłw foto",
   },
   robots: {
     index: true,
     follow: true,
   },
   manifest: "/site.webmanifest",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-icon.png", type: "image/png" }],
+    shortcut: ["/favicon.ico"],
+  },
 };
 
 export default async function RootLayout({
@@ -80,3 +88,4 @@ export default async function RootLayout({
     </html>
   );
 }
+

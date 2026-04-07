@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Blog Post Page — Server Component
  * Exports generateMetadata for SEO/OG tags, then renders the client component.
  */
@@ -60,13 +60,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const article = data as unknown as MetadataArticle | null;
     if (!article) {
       return {
-        title: 'Artykuł nie znaleziony | Blog Gedeon Polska',
+        title: 'Artykuł nie znaleziony | Blog Gedeon',
         description: 'Strona nie istnieje.',
       };
     }
 
-    const title = `${article.title_pl} | Blog Gedeon Polska`;
-    const description = article.excerpt_pl ?? 'Artykuł na blogu Gedeon Polska — albumy, ramki, media fotograficzne.';
+    const title = `${article.title_pl} | Blog Gedeon`;
+    const description = article.excerpt_pl ?? 'Artykuł na blogu Gedeon — albumy, ramki, media fotograficzne.';
     const imageUrl = resolveCoverImage(article) ?? `${SITE_URL}/og-default.jpg`;
     const articleUrl = `${SITE_URL}/blog/${slug}`;
 
@@ -79,7 +79,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         url: articleUrl,
         title: article.title_pl,
         description,
-        siteName: 'Blog Gedeon Polska',
+        siteName: 'Blog Gedeon',
         publishedTime: article.published_at ?? undefined,
         images: [
           {
@@ -102,7 +102,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   } catch {
     return {
-      title: 'Blog Gedeon Polska',
+      title: 'Blog Gedeon',
       description: 'Artykuły o fotografii, albumach i produktach Gedeon.',
     };
   }

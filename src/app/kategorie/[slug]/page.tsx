@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
@@ -92,8 +92,8 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
             </h1>
             <p style={{ maxWidth: '680px', fontSize: '1rem' }}>
               {lang === 'pl'
-                ? 'Artykuły i inspiracje z wybranej kategorii produktowej Gedeon Polska.'
-                : 'Articles and inspirations for the selected Gedeon Polska product category.'}
+                ? 'Artykuły i inspiracje z wybranej kategorii produktowej Gedeon.'
+                : 'Articles and inspirations for the selected Gedeon product category.'}
             </p>
           </div>
         </section>

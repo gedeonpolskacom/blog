@@ -2265,8 +2265,8 @@ export default function AdminPage() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <span className="brand-logo-swap" style={{ height: '30px' }}>
             <Image
-              src="/brand/gedeonwh.png"
-              alt="Gedeon Polska"
+              src="/brand/gedeonwh_1.png"
+              alt="Gedeon"
               width={186}
               height={48}
               className="brand-logo-dark"
@@ -2275,7 +2275,7 @@ export default function AdminPage() {
             />
             <Image
               src="/brand/gedeon.png"
-              alt="Gedeon Polska"
+              alt="Gedeon"
               width={186}
               height={48}
               className="brand-logo-light"
