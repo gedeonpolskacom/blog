@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState } from 'react';
 import Link from 'next/link';
@@ -9,18 +9,18 @@ import Footer from '@/components/Footer';
 const FEATURES = [
   {
     icon: Camera,
-    title: 'BranĹĽa fotograficzna',
-    text: 'Tworzymy i rozwijamy ofertÄ™ dla laboratoriĂłw, fotografĂłw, studiĂłw i sklepĂłw foto.',
+    title: 'Branża fotograficzna',
+    text: 'Tworzymy i rozwijamy ofertę dla laboratoriów, fotografów, studiów i sklepów foto.',
   },
   {
     icon: PackageCheck,
     title: 'Produkty i dystrybucja',
-    text: 'Albumy, ramki, antyramy, media DryLab i papiery fotograficzne dostÄ™pne dla B2B i detalistĂłw.',
+    text: 'Albumy, ramki, antyramy, media DryLab i papiery fotograficzne dostępne dla B2B i detalistów.',
   },
   {
     icon: Building2,
     title: 'Wsparcie handlowe',
-    text: 'ĹÄ…czymy content, sprzedaĹĽ i logistykÄ™, ĹĽeby partnerzy szybciej wdraĹĽali nowe kolekcje i produkty.',
+    text: 'Łączymy content, sprzedaż i logistykę, żeby partnerzy szybciej wdrażali nowe kolekcje i produkty.',
   },
 ];
 
@@ -41,12 +41,12 @@ export default function AboutPage() {
             <span className="badge" style={{ marginBottom: '1rem', display: 'inline-flex' }}>GEDEON</span>
             <h1 style={{ maxWidth: '760px', marginBottom: '1rem' }}>
               {lang === 'pl'
-                ? 'Producent i dystrybutor rozwiÄ…zaĹ„ dla rynku foto.'
+                ? 'Producent i dystrybutor rozwiązań dla rynku foto.'
                 : 'Manufacturer and distributor for the photo market.'}
             </h1>
             <p style={{ maxWidth: '720px', fontSize: '1.05rem' }}>
               {lang === 'pl'
-                ? 'Blog Gedeon wspiera sprzedaĹĽ i edukacjÄ™ wokĂłĹ‚ albumĂłw fotograficznych, ramek, mediĂłw DryLab i papierĂłw KODAK. ĹÄ…czymy wiedzÄ™ produktowÄ… z praktykÄ… rynku B2B.'
+                ? 'Blog Gedeon wspiera sprzedaż i edukację wokół albumów fotograficznych, ramek, mediów DryLab i papierów KODAK. Łączymy wiedzę produktową z praktyką rynku B2B.'
                 : 'The Gedeon blog supports sales and education around photo albums, frames, DryLab media and KODAK papers. We combine product knowledge with real B2B market practice.'}
             </p>
           </div>
@@ -85,11 +85,11 @@ export default function AboutPage() {
             }}>
               <div style={{ maxWidth: '620px' }}>
                 <h2 style={{ fontSize: '1.35rem', marginBottom: '0.7rem' }}>
-                  {lang === 'pl' ? 'Chcesz zobaczyÄ‡ ofertÄ™ lub przeczytaÄ‡ poradniki?' : 'Want to browse the offer or read guides?'}
+                  {lang === 'pl' ? 'Chcesz zobaczyć ofertę lub przeczytać poradniki?' : 'Want to browse the offer or read guides?'}
                 </h2>
                 <p>
                   {lang === 'pl'
-                    ? 'PrzejdĹş do platformy B2B albo do sekcji blogowej, gdzie publikujemy nowoĹ›ci, inspiracje i artykuĹ‚y produktowe.'
+                    ? 'Przejdź do platformy B2B albo do sekcji blogowej, gdzie publikujemy nowości, inspiracje i artykuły produktowe.'
                     : 'Open the B2B platform or the blog section with product updates, inspirations and guides.'}
                 </p>
               </div>
@@ -110,5 +110,6 @@ export default function AboutPage() {
     </>
   );
 }
+
 
 

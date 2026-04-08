@@ -5,32 +5,32 @@ const CATEGORY_META: Record<string, { pl: string; en: string; description: strin
   albumy: {
     pl: "Albumy",
     en: "Albums",
-    description: "Artykuly o albumach fotograficznych, kolekcjach i sprzedazy.",
+    description: "Artykuły o albumach fotograficznych, kolekcjach i sprzedaży.",
   },
   ramki: {
     pl: "Ramki",
     en: "Frames",
-    description: "Artykuly o ramkach, ekspozycji i trendach dekoracyjnych.",
+    description: "Artykuły o ramkach, ekspozycji i trendach dekoracyjnych.",
   },
   media: {
     pl: "Media",
     en: "Media",
-    description: "Artykuly o mediach DryLab i materialach dla branzy foto.",
+    description: "Artykuły o mediach DryLab i materiałach dla branży foto.",
   },
   trendy: {
     pl: "Trendy",
     en: "Trends",
-    description: "Trendy rynkowe i inspiracje dla studiow fotograficznych i sklepow foto.",
+    description: "Trendy rynkowe i inspiracje dla studiów fotograficznych i sklepów foto.",
   },
   poradniki: {
     pl: "Poradniki",
     en: "Guides",
-    description: "Praktyczne poradniki dla biznesu foto i sprzedazy B2B.",
+    description: "Praktyczne poradniki dla biznesu foto i sprzedaży B2B.",
   },
   kodak: {
     pl: "KODAK",
     en: "KODAK",
-    description: "Nowosci i porady produktowe zwiazane z marka KODAK.",
+    description: "Nowości i porady produktowe związane z marką KODAK.",
   },
 };
 
@@ -79,4 +79,3 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
 export default function CategoryLayout({ children }: LayoutProps) {
   return children;
 }
-

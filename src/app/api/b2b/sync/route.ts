@@ -99,6 +99,70 @@ function normalizeSku(sku: string) {
   return sku.trim().toUpperCase();
 }
 
+type AIContentBlock = {
+  type?: string;
+  text?: string;
+  url?: string;
+  ctaEn?: string;
+  [key: string]: unknown;
+};
+
+function ensureAudienceSplit(content: unknown): AIContentBlock[] {
+  const blocks = Array.isArray(content)
+    ? content.filter((item): item is AIContentBlock => Boolean(item && typeof item === 'object'))
+    : [];
+
+  if (!blocks.length) return [];
+
+  const headingText = (block: AIContentBlock) =>
+    block.type === 'heading' ? String(block.text ?? '').toLowerCase() : '';
+
+  const hasB2BSection = blocks.some((block) =>
+    /(partner|hurtown|b2b|dla studia|dla sklepu)/i.test(headingText(block))
+  );
+  const hasEndCustomerSection = blocks.some((block) =>
+    /(klient|konsument|użytkownik końcowy|detal)/i.test(headingText(block))
+  );
+  const hasB2BCta = blocks.some((block) =>
+    block.type === 'cta'
+    && typeof block.url === 'string'
+    && /b2b\.gedeonpolska\.com/i.test(block.url)
+  );
+
+  const normalized = [...blocks];
+
+  if (!hasB2BSection) {
+    normalized.push(
+      { type: 'heading', text: 'Dla partnerów B2B' },
+      {
+        type: 'paragraph',
+        text: 'Sekcja B2B: argumenty sprzedażowe i zastosowania produktu dla studia, sklepu foto oraz partnera handlowego.',
+      },
+    );
+  }
+
+  if (!hasEndCustomerSection) {
+    normalized.push(
+      { type: 'heading', text: 'Jak komunikować to klientowi końcowemu' },
+      {
+        type: 'paragraph',
+        text: 'Sekcja dla partnera: jak opisać korzyści klientowi końcowemu językiem wartości, a nie samej ceny.',
+      },
+    );
+  }
+
+  if (!hasB2BCta) {
+    normalized.push({
+      type: 'cta',
+      text: 'Sprawdź warunki handlowe B2B',
+      url: 'https://b2b.gedeonpolska.com',
+      ctaEn: 'Check B2B terms',
+    });
+  }
+
+  return normalized;
+}
+
 // ── Auth ──────────────────────────────────────────────────────
 
 function isAuthorized(request: NextRequest): boolean {
@@ -195,7 +259,10 @@ async function generateDraft(product: B2BProduct, category: string) {
 
   const prompt = `Jesteś ekspertem content marketingu dla branży fotograficznej.
 Firma: Gedeon Polska — producent i dystrybutor albumów, ramek, mediów DryLab i papieru KODAK.
-Odbiorcy: studia fotograficzne, sklepy foto, minilabu, fotografowie B2B.
+Główny odbiorca: partner B2B (studia fotograficzne, sklepy foto, hurtownie).
+Jeśli wspominasz o kliencie końcowym, rób to jako wskazówki dla partnera — nie pisz bezpośrednio do konsumenta.
+W sekcji B2B podawaj argumenty handlowe: marża, rotacja, ekspozycja i cross-sell.
+Nie używaj bezpośrednich zwrotów konsumenckich typu "kup teraz" czy "dla Twojego domu".
 
 ZADANIE: Napisz krótki artykuł blogowy o nowym produkcie:
 - Nazwa: ${product.name}
@@ -215,11 +282,11 @@ Odpowiedz TYLKO czystym JSON (bez markdown, bez objaśnień):
   "read_time": 5,
   "content_pl": [
     {"type": "lead", "text": "Wciągający lead 2-3 zdania"},
-    {"type": "heading", "text": "Nagłówek H2"},
+    {"type": "heading", "text": "Dla partnerów B2B"},
     {"type": "paragraph", "text": "Treść akapitu"},
     {"type": "tip", "text": "Praktyczna wskazówka dla fotografa"},
-    {"type": "heading", "text": "Drugi nagłówek"},
-    {"type": "paragraph", "text": "Więcej treści"},
+    {"type": "heading", "text": "Jak komunikować to klientowi końcowemu"},
+    {"type": "paragraph", "text": "Wskazówki, jak partner może opisać korzyści klientowi detalicznemu."},
     {"type": "cta", "text": "Zamów w sklepie B2B Gedeon", "url": "https://b2b.gedeonpolska.com", "ctaEn": "Order in B2B"}
   ]
 }`;
@@ -415,6 +482,7 @@ export async function GET(request: NextRequest) {
       draftCandidates.map(async ({ product, category }) => {
         try {
           const articleData = await generateDraft(product, category);
+          articleData.content_pl = ensureAudienceSplit(articleData.content_pl);
           const slug =
             articleData.slug ?? `pim-${product.sku.toLowerCase().replace(/[^a-z0-9]/g, '-')}-${Date.now()}`;
           const coverImage = choosePrimaryB2BImage(product.images);
@@ -509,3 +577,4 @@ export async function GET(request: NextRequest) {
     );
   }
 }
+

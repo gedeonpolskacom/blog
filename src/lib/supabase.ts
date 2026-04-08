@@ -211,3 +211,4 @@ export async function getTopicSuggestions(status?: string) {
   if (error) throw error;
   return data as TopicSuggestion[];
 }
+

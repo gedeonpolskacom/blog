@@ -4,7 +4,7 @@ import { SITE_URL } from "@/lib/site-url";
 export const metadata: Metadata = {
   title: "O nas",
   description:
-    "Poznaj Gedeon - producenta i dystrybutora rozwiazan dla rynku foto oraz autora bloga branzowego.",
+    "Poznaj Gedeon - producenta i dystrybutora rozwiązań dla rynku foto oraz autora bloga branżowego.",
   alternates: {
     canonical: `${SITE_URL}/o-nas`,
   },
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     url: `${SITE_URL}/o-nas`,
     title: "O nas | Gedeon",
     description:
-      "Poznaj Gedeon - producenta i dystrybutora rozwiazan dla rynku foto oraz autora bloga branzowego.",
+      "Poznaj Gedeon - producenta i dystrybutora rozwiązań dla rynku foto oraz autora bloga branżowego.",
     images: [
       {
         url: `${SITE_URL}/android-chrome-512x512.png`,
@@ -30,4 +30,3 @@ export default function AboutLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return children;
 }
-

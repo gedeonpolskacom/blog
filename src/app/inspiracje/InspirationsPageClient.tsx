@@ -138,7 +138,7 @@ export default function InspirationsPageClient({
               <h1 style={{ marginBottom: '1rem' }}>
                 {lang === 'pl' ? (
                   <>
-                    <span className="gradient-text-gold">Inspiracje</span> dla branzy foto
+                    <span className="gradient-text-gold">Inspiracje</span> dla branży foto
                   </>
                 ) : (
                   <>
@@ -505,3 +505,4 @@ export default function InspirationsPageClient({
     </>
   );
 }
+

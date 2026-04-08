@@ -4,7 +4,7 @@ import { SITE_URL } from "@/lib/site-url";
 export const metadata: Metadata = {
   title: "Galeria inspiracji foto",
   description:
-    "Galeria inspiracji produktowych Gedeon: albumy, ramki, media i realizacje dla branzy foto.",
+    "Galeria inspiracji produktowych Gedeon: albumy, ramki, media i realizacje dla branży foto.",
   alternates: {
     canonical: `${SITE_URL}/inspiracje`,
   },
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     url: `${SITE_URL}/inspiracje`,
     title: "Galeria inspiracji foto | Gedeon",
     description:
-      "Galeria inspiracji produktowych Gedeon: albumy, ramki, media i realizacje dla branzy foto.",
+      "Galeria inspiracji produktowych Gedeon: albumy, ramki, media i realizacje dla branży foto.",
     images: [
       {
         url: `${SITE_URL}/android-chrome-512x512.png`,
@@ -30,4 +30,3 @@ export default function InspirationsLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return children;
 }
-

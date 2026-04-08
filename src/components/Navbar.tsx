@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
@@ -9,7 +9,7 @@ import { clsx } from 'clsx';
 const navLinks = [
   { href: '/blog', label: 'Blog', labelEn: 'Blog' },
   { href: '/inspiracje', label: 'Inspiracje', labelEn: 'Inspiration' },
-  { href: '/nowosci', label: 'Nowosci', labelEn: 'New Products' },
+  { href: '/nowosci', label: 'Nowości', labelEn: 'New Products' },
   { href: '/kategorie/albumy', label: 'Albumy', labelEn: 'Albums' },
   { href: '/o-nas', label: 'O nas', labelEn: 'About' },
 ];
@@ -126,8 +126,8 @@ export default function Navbar({ lang = 'pl', onLangChange }: NavbarProps) {
             <button
               className="theme-btn"
               type="button"
-              aria-label="Przelacz motyw"
-              title="Przelacz motyw"
+              aria-label="Przełącz motyw"
+              title="Przełącz motyw"
               onClick={toggleTheme}
             >
               <span className="theme-icon theme-icon-sun" aria-hidden="true"><Sun size={16} /></span>
@@ -199,7 +199,7 @@ export default function Navbar({ lang = 'pl', onLangChange }: NavbarProps) {
               <button
                 className="theme-btn"
                 type="button"
-                aria-label="Przelacz motyw"
+                aria-label="Przełącz motyw"
                 onClick={toggleTheme}
                 style={{ width: '42px', height: '42px' }}
               >

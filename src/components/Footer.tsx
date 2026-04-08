@@ -203,3 +203,4 @@ export default function Footer({ lang = 'pl' }: { lang?: 'pl' | 'en' }) {
     </footer>
   );
 }
+

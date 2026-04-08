@@ -20,3 +20,4 @@ export async function GET() {
 export async function POST() {
   return NextResponse.json({ success: true, id: SYSTEM_ACCOUNT.id });
 }
+

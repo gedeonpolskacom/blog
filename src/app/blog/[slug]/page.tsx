@@ -35,7 +35,7 @@ function buildArticleJsonLd(article: ArticleWithProducts) {
   const imageUrl = resolveCoverImage(article) ?? DEFAULT_OG_IMAGE;
   const description =
     article.excerpt_pl ??
-    "Artykul na blogu Gedeon - albumy, ramki i media fotograficzne dla rynku B2B.";
+    "Artykuł na blogu Gedeon - albumy, ramki i media fotograficzne dla rynku B2B.";
   const publishedAt = article.published_at ?? article.created_at;
   const updatedAt = article.updated_at ?? publishedAt;
 
@@ -54,7 +54,7 @@ function buildArticleJsonLd(article: ArticleWithProducts) {
         articleSection: article.category,
         author: {
           "@type": "Person",
-          name: article.author || "Zespol Gedeon",
+          name: article.author || "Zespół Gedeon",
         },
         publisher: {
           "@type": "Organization",
@@ -95,8 +95,8 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
 
   if (isPreview) {
     return {
-      title: "Podglad artykulu | Blog Gedeon",
-      description: "Podglad roboczej wersji artykulu.",
+      title: "Podgląd artykułu | Blog Gedeon",
+      description: "Podgląd roboczej wersji artykułu.",
       alternates: {
         canonical: articleUrl,
       },
@@ -112,7 +112,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   const article = await getPublishedArticleBySlug(slug);
   if (!article) {
     return {
-      title: "Artykul nie znaleziony | Blog Gedeon",
+      title: "Artykuł nie znaleziony | Blog Gedeon",
       description: "Strona nie istnieje.",
       robots: {
         index: false,
@@ -124,7 +124,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   const title = article.title_pl;
   const description =
     article.excerpt_pl ??
-    "Artykul na blogu Gedeon - albumy, ramki i media fotograficzne dla rynku B2B.";
+    "Artykuł na blogu Gedeon - albumy, ramki i media fotograficzne dla rynku B2B.";
   const imageUrl = resolveCoverImage(article) ?? DEFAULT_OG_IMAGE;
 
   return {
@@ -183,4 +183,3 @@ export default async function BlogPostPage({ params, searchParams }: Props) {
     </>
   );
 }
-

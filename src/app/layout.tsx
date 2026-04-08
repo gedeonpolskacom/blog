@@ -23,14 +23,14 @@ const bodyFont = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Gedeon Blog - inspiracje dla profesjonalistow foto",
+    default: "Gedeon Blog - inspiracje dla profesjonalistów foto",
     template: "%s | Gedeon Blog",
   },
   description:
-    "Blog i galeria inspiracji dla studiow fotograficznych, sklepow foto i minilabow. Nowosci produktowe, trendy i poradniki od Gedeon.",
+    "Blog i galeria inspiracji dla studiów fotograficznych, sklepów foto i minilabów. Nowości produktowe, trendy i poradniki od Gedeon.",
   keywords: [
     "albumy fotograficzne",
-    "ramki do zdjec",
+    "ramki do zdjęć",
     "papier fotograficzny",
     "drylab media",
     "studio fotograficzne",
@@ -49,9 +49,9 @@ export const metadata: Metadata = {
     locale: "pl_PL",
     alternateLocale: ["en_US"],
     siteName: "Gedeon Blog",
-    title: "Gedeon Blog - inspiracje dla profesjonalistow foto",
+    title: "Gedeon Blog - inspiracje dla profesjonalistów foto",
     description:
-      "Blog i galeria inspiracji dla branzy fotograficznej. Nowosci, trendy i poradniki.",
+      "Blog i galeria inspiracji dla branży fotograficznej. Nowości, trendy i poradniki.",
     images: [
       {
         url: "/android-chrome-512x512.png",
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Gedeon Blog",
-    description: "Inspiracje dla profesjonalistow foto",
+    description: "Inspiracje dla profesjonalistów foto",
     images: ["/android-chrome-512x512.png"],
   },
   robots: {

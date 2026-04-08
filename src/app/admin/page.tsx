@@ -1,4 +1,4 @@
-﻿/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @next/next/no-img-element */
 'use client';
 
@@ -174,7 +174,7 @@ function StatCard({ icon: Icon, label, value, color }: {
 
 function SourceBadge({ source }: { source: Draft['source'] }) {
   const config = {
-    manual: { label: 'Recznie', color: '#6b7280', icon: PenLine },
+    manual: { label: 'Ręcznie', color: '#6b7280', icon: PenLine },
     ai_generated: { label: 'AI', color: '#8b5cf6', icon: Sparkles },
     pim_trigger: { label: 'PIM', color: '#f59e0b', icon: Package },
   }[source];
@@ -373,7 +373,7 @@ function AIGeneratorPanel({ onGenerated }: { onGenerated: (draft: Draft) => void
               style={{ overflow: 'hidden' }}
             >
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', paddingTop: '0.5rem' }}>
-                <p style={{ fontSize: '0.75rem', color: 'var(--color-gray-muted)' }}>Kliknij aby uzyc tematu:</p>
+                <p style={{ fontSize: '0.75rem', color: 'var(--color-gray-muted)' }}>Kliknij, aby użyć tematu:</p>
                 {suggestions.map((s, i) => (
                   <button key={i} onClick={() => { setTopic(s.title_pl); setCategory(s.category); }} style={{
                     textAlign: 'left', padding: '0.625rem 0.875rem',
@@ -506,20 +506,20 @@ function ManualArticlePanel({ onCreated }: { onCreated: (draft: Draft) => void }
         <input
           value={excerpt}
           onChange={(e) => setExcerpt(e.target.value)}
-          placeholder="Lead / krotki opis (opcjonalnie)"
+          placeholder="Lead / krótki opis (opcjonalnie)"
           className="newsletter-input"
         />
 
         <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          placeholder="Tresc artykulu (mozna wkleic HTML: p, h2-h6, li, img)"
+          placeholder="Treść artykułu (można wkleić HTML: p, h2-h6, li, img)"
           className="newsletter-input"
           rows={8}
           style={{ resize: 'vertical', paddingTop: '0.7rem', minHeight: '180px' }}
         />
         <p style={{ margin: 0, fontSize: '0.75rem', color: 'var(--color-gray-muted)' }}>
-          Wklejony HTML jest automatycznie zamieniany na bloki tresci podczas zapisu.
+          Wklejony HTML jest automatycznie zamieniany na bloki treści podczas zapisu.
         </p>
 
         <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
@@ -1497,7 +1497,7 @@ function InspirationsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
         <div>
           <h2 style={{ fontSize: '1.2rem', fontFamily: 'var(--font-body)', fontWeight: 600 }}>Inspiracje - upload i edycja</h2>
           <p style={{ fontSize: '0.8rem', color: 'var(--color-gray-muted)', marginTop: '0.25rem' }}>
-            Wgrywanie masowe, auto-uzupelnianie po SKU z B2B i edycja opublikowanych pozycji.
+            Wgrywanie masowe, auto-uzupełnianie po SKU z B2B i edycja opublikowanych pozycji.
           </p>
         </div>
         <button
@@ -1516,7 +1516,7 @@ function InspirationsPanel({ onNotify }: { onNotify: (msg: string) => void }) {
             fontSize: '0.8rem',
           }}
         >
-          <RefreshCw size={13} /> Odswiez
+          <RefreshCw size={13} /> Odśwież
         </button>
       </div>
 
@@ -2289,7 +2289,7 @@ export default function AdminPage() {
           </span>
           <div>
             <div style={{ fontSize: '0.925rem', fontWeight: 700, color: 'var(--color-cream)' }}>Gedeon Blog Admin</div>
-            <div style={{ fontSize: '0.72rem', color: 'var(--color-gray-muted)' }}>Panel zarzadzania contentem</div>
+            <div style={{ fontSize: '0.72rem', color: 'var(--color-gray-muted)' }}>Panel zarządzania contentem</div>
           </div>
         </div>
         <div style={{ display: 'flex', gap: '0.75rem' }}>
@@ -2299,7 +2299,7 @@ export default function AdminPage() {
             borderRadius: '8px', fontSize: '0.8rem', color: 'var(--color-gray-muted)', cursor: 'pointer',
             fontFamily: 'var(--font-body)',
           }}>
-            <RefreshCw size={13} /> Odswiez
+            <RefreshCw size={13} /> Odśwież
           </button>
           <a href="/blog" target="_blank" className="btn-primary" style={{ padding: '0.5rem 0.875rem', fontSize: '0.8rem', display: 'inline-flex', alignItems: 'center', gap: '0.375rem', textDecoration: 'none' }}>
             Blog publiczny <ArrowRight size={13} />

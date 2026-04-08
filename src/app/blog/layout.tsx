@@ -4,7 +4,7 @@ import { SITE_URL } from "@/lib/site-url";
 export const metadata: Metadata = {
   title: "Blog foto B2B",
   description:
-    "Artykuly, poradniki i trendy dla studiow fotograficznych, sklepow foto i minilabow.",
+    "Artykuły, poradniki i trendy dla studiów fotograficznych, sklepów foto i minilabów.",
   alternates: {
     canonical: `${SITE_URL}/blog`,
   },
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     url: `${SITE_URL}/blog`,
     title: "Blog foto B2B | Gedeon",
     description:
-      "Artykuly, poradniki i trendy dla studiow fotograficznych, sklepow foto i minilabow.",
+      "Artykuły, poradniki i trendy dla studiów fotograficznych, sklepów foto i minilabów.",
     images: [
       {
         url: `${SITE_URL}/android-chrome-512x512.png`,
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Blog foto B2B | Gedeon",
     description:
-      "Artykuly, poradniki i trendy dla studiow fotograficznych, sklepow foto i minilabow.",
+      "Artykuły, poradniki i trendy dla studiów fotograficznych, sklepów foto i minilabów.",
     images: [`${SITE_URL}/android-chrome-512x512.png`],
   },
 };
@@ -37,4 +37,3 @@ export default function BlogLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return children;
 }
-

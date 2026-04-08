@@ -1,7 +1,7 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
 
 /* ============================================
-   GEDEON â€” Design System Tokens
+   GEDEON — Design System Tokens
    Premium Photography B2B/B2C Blog
    ============================================ */
 
@@ -675,4 +675,5 @@ a {
   .masonry-grid { columns: 1; }
   .hero-section { min-height: 85vh; }
 }
+
 

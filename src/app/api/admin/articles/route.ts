@@ -352,7 +352,7 @@ export async function POST(request: NextRequest) {
       read_time: readTime,
       status: 'draft' as const,
       source: 'manual' as const,
-      author: 'Zespol Gedeon',
+      author: 'Zespół Gedeon',
       author_role: 'Panel Admin',
     };
 
@@ -684,3 +684,4 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json({ error: err instanceof Error ? err.message : 'Unknown error' }, { status: 500 });
   }
 }
+

@@ -82,12 +82,12 @@ const SERPAPI_SEEDS: TrendSeed[] = [
   {
     query: 'album fotograficzny',
     category: 'Albumy',
-    keywords: ['album', 'zdjecia', 'fotografia'],
+    keywords: ['album', 'zdjęcia', 'fotografia'],
   },
   {
-    query: 'ramki na zdjecia',
+    query: 'ramki na zdjęcia',
     category: 'Ramki',
-    keywords: ['ramki', 'dekoracja', 'zdjecia'],
+    keywords: ['ramki', 'dekoracja', 'zdjęcia'],
   },
   {
     query: 'papier fotograficzny kodak',
@@ -150,6 +150,70 @@ function toStringArray(value: unknown): string[] {
 function mergeImages(primary: string | null, images: string[], max = 8) {
   const deduped = Array.from(new Set([primary, ...images].filter(Boolean) as string[]));
   return deduped.slice(0, max);
+}
+
+type AIContentBlock = {
+  type?: string;
+  text?: string;
+  url?: string;
+  ctaEn?: string;
+  [key: string]: unknown;
+};
+
+function ensureAudienceSplit(content: unknown): AIContentBlock[] {
+  const blocks = Array.isArray(content)
+    ? content.filter((item): item is AIContentBlock => Boolean(item && typeof item === 'object'))
+    : [];
+
+  if (!blocks.length) return [];
+
+  const headingText = (block: AIContentBlock) =>
+    block.type === 'heading' ? String(block.text ?? '').toLowerCase() : '';
+
+  const hasB2BSection = blocks.some((block) =>
+    /(partner|hurtown|b2b|dla studia|dla sklepu)/i.test(headingText(block))
+  );
+  const hasEndCustomerSection = blocks.some((block) =>
+    /(klient|konsument|użytkownik końcowy|detal)/i.test(headingText(block))
+  );
+  const hasB2BCta = blocks.some((block) =>
+    block.type === 'cta'
+    && typeof block.url === 'string'
+    && /b2b\.gedeonpolska\.com/i.test(block.url)
+  );
+
+  const normalized = [...blocks];
+
+  if (!hasB2BSection) {
+    normalized.push(
+      { type: 'heading', text: 'Dla partnerów B2B' },
+      {
+        type: 'paragraph',
+        text: 'Ta część opisuje, jak produkt wspiera sprzedaż hurtową, ekspozycję i ofertę dla studiów fotograficznych oraz sklepów foto.',
+      },
+    );
+  }
+
+  if (!hasEndCustomerSection) {
+    normalized.push(
+      { type: 'heading', text: 'Jak komunikować to klientowi końcowemu' },
+      {
+        type: 'paragraph',
+        text: 'Sekcja dla partnera: podpowiedz, jak tłumaczyć klientowi końcowemu korzyści produktu prostym językiem, bez obniżania marży i bez wojny cenowej.',
+      },
+    );
+  }
+
+  if (!hasB2BCta) {
+    normalized.push({
+      type: 'cta',
+      text: 'Sprawdź warunki handlowe B2B',
+      url: 'https://b2b.gedeonpolska.com',
+      ctaEn: 'Check B2B terms',
+    });
+  }
+
+  return normalized;
 }
 
 // ── Prompt builder ────────────────────────────────────────────
@@ -273,7 +337,8 @@ function buildPrompt(req: GenerateRequest): string {
   const baseContext = `
 Jesteś ekspertem content marketingu dla branży fotograficznej. 
 Piszesz dla firmy Gedeon Polska — producenta i dystrybutora albumów fotograficznych, ramek, antyram, papieru do drukarek atramentowych KODAK i mediów DryLab.
-Odbiorcy to: studia fotograficzne, sklepy foto, minilabu, fotografowie B2B oraz klienci B2C.
+Główny odbiorca to partner B2B: studia fotograficzne, sklepy foto, minilaby i hurtownicy.
+Jeśli opisujesz klienta końcowego, rób to wyłącznie jako wskazówki komunikacyjne dla partnera, a nie jako bezpośredni tekst sprzedażowy do konsumenta.
 
 ZASADY:
 - Używaj polskiego, profesjonalnego języka
@@ -282,6 +347,9 @@ ZASADY:
 - Unikaj korporacyjnego żargonu
 - Dodaj praktyczne wskazówki dla fotografów 
 - Artykuł ma być SEO-friendly dla polskiej branży foto
+- Każdy artykuł musi zawierać osobne sekcje: "Dla partnerów B2B" oraz "Jak komunikować to klientowi końcowemu"
+- W sekcji B2B podawaj argumenty handlowe: marża, rotacja, ekspozycja, cross-sell i sezonowość
+- Nie zwracaj się bezpośrednio do konsumenta (unikaj form typu "kup teraz", "idealne do Twojego domu")
 `;
 
   if (req.mode === 'product') {
@@ -305,11 +373,11 @@ Struktura artykułu (JSON):
   "read_time": 7,
   "content_pl": [
     {"type": "lead", "text": "Wciągający lead artykułu (2-3 zdania)"},
-    {"type": "heading", "text": "Pierwszy nagłówek H2"},
+    {"type": "heading", "text": "Dla partnerów B2B"},
     {"type": "paragraph", "text": "Treść akapitu..."},
     {"type": "tip", "text": "Praktyczna wskazówka dla fotografa/sklepu"},
-    {"type": "heading", "text": "Drugi nagłówek H2"},
-    {"type": "paragraph", "text": "Więcej treści..."},
+    {"type": "heading", "text": "Jak komunikować to klientowi końcowemu"},
+    {"type": "paragraph", "text": "Wskazówki, jak partner może przedstawić wartość produktu klientowi detalicznemu."},
     {"type": "cta", "text": "Zamów produkt w B2B", "url": "https://b2b.gedeonpolska.com", "ctaEn": "Order in B2B"}
   ]
 }
@@ -338,12 +406,12 @@ Struktura artykułu (JSON):
   "read_time": 8,
   "content_pl": [
     {"type": "lead", "text": "..."},
-    {"type": "heading", "text": "..."},
+    {"type": "heading", "text": "Dla partnerów B2B"},
     {"type": "paragraph", "text": "..."},
     {"type": "tip", "text": "..."},
-    {"type": "heading", "text": "..."},
+    {"type": "heading", "text": "Jak komunikować to klientowi końcowemu"},
     {"type": "paragraph", "text": "..."},
-    {"type": "heading", "text": "..."},
+    {"type": "heading", "text": "Rekomendacja handlowa dla partnera"},
     {"type": "paragraph", "text": "..."},
     {"type": "cta", "text": "Sprawdź produkty Gedeon", "url": "https://b2b.gedeonpolska.com", "ctaEn": "Check Gedeon products"}
   ]
@@ -380,10 +448,10 @@ Struktura (JSON):
   "read_time": 9,
   "content_pl": [
     {"type": "lead", "text": "..."},
-    {"type": "heading", "text": "..."},
+    {"type": "heading", "text": "Dla partnerów B2B"},
     {"type": "paragraph", "text": "..."},
     {"type": "tip", "text": "..."},
-    {"type": "heading", "text": "..."},
+    {"type": "heading", "text": "Jak komunikować to klientowi końcowemu"},
     {"type": "paragraph", "text": "..."},
     {"type": "cta", "text": "Zobacz pełną ofertę Gedeon", "url": "https://b2b.gedeonpolska.com", "ctaEn": "View Gedeon catalog"}
   ]
@@ -488,6 +556,8 @@ export async function POST(request: NextRequest) {
         raw: rawJson.slice(0, 500) 
       }, { status: 500 });
     }
+
+    articleData.content_pl = ensureAudienceSplit(articleData.content_pl);
 
     // Optionally save as draft to Supabase
     if (body.saveAsDraft && supabaseAdmin) {
@@ -722,3 +792,4 @@ export async function GET() {
   setCachedSuggestions('static', suggestions);
   return NextResponse.json({ suggestions, source: 'static', cached: false });
 }
+

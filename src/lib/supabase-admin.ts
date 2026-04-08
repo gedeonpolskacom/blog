@@ -46,3 +46,4 @@ export async function saveTopicSuggestion(topic: Partial<TopicSuggestion>) {
   if (error) throw error;
   return data;
 }
+
