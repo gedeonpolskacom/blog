@@ -1,116 +1,186 @@
-﻿/**
- * Blog Post Page — Server Component
- * Exports generateMetadata for SEO/OG tags, then renders the client component.
- */
-
-import type { Metadata } from 'next';
-import { createClient } from '@supabase/supabase-js';
-import BlogPostClient from './BlogPostClient';
-import { resolveCoverImage } from '@/lib/article-cover';
-import { HOME_FEATURED_TAG } from '@/lib/homepage-featured';
-import { SITE_URL } from '@/lib/site-url';
+import { cache } from "react";
+import type { Metadata } from "next";
+import { supabaseAdmin } from "@/lib/supabase-admin";
+import { resolveCoverImage } from "@/lib/article-cover";
+import { HOME_FEATURED_TAG } from "@/lib/homepage-featured";
+import { SITE_URL } from "@/lib/site-url";
+import { type ArticleWithProducts } from "@/lib/supabase";
+import BlogPostClient from "./BlogPostClient";
 
 type Props = {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ preview?: string }>;
 };
 
-type MetadataArticle = {
-  title_pl: string;
-  excerpt_pl?: string | null;
-  cover_image?: string | null;
-  cover_url?: string | null;
-  tags?: string[] | null;
-  published_at?: string | null;
-};
+const DEFAULT_OG_IMAGE = `${SITE_URL}/android-chrome-512x512.png`;
 
-// ── SEO Metadata (server-side) ────────────────────────────────
+const getPublishedArticleBySlug = cache(async (slug: string): Promise<ArticleWithProducts | null> => {
+  const { data, error } = await supabaseAdmin
+    .from("articles")
+    .select("*, article_products(*, products(*))")
+    .eq("slug", slug)
+    .eq("status", "published")
+    .maybeSingle();
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+  if (error) {
+    console.error("[blog/[slug]] Failed to fetch article:", error.message);
+    return null;
+  }
 
-  try {
-    const supabaseAdmin = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!,
-      { auth: { autoRefreshToken: false, persistSession: false } },
-    );
+  return (data as ArticleWithProducts | null) ?? null;
+});
 
-    const runQuery = async (withCoverImage: boolean) =>
-      await supabaseAdmin
-        .from('articles')
-        .select(
-          withCoverImage
-            ? 'title_pl, title_en, excerpt_pl, excerpt_en, cover_image, cover_url, category, tags, published_at'
-            : 'title_pl, title_en, excerpt_pl, excerpt_en, cover_url, category, tags, published_at'
-        )
-        .eq('slug', slug)
-        .single();
+function buildArticleJsonLd(article: ArticleWithProducts) {
+  const articleUrl = `${SITE_URL}/blog/${article.slug}`;
+  const imageUrl = resolveCoverImage(article) ?? DEFAULT_OG_IMAGE;
+  const description =
+    article.excerpt_pl ??
+    "Artykul na blogu Gedeon - albumy, ramki i media fotograficzne dla rynku B2B.";
+  const publishedAt = article.published_at ?? article.created_at;
+  const updatedAt = article.updated_at ?? publishedAt;
 
-    let { data, error } = await runQuery(true);
-    if (error && /cover_image/i.test(error.message)) {
-      const fallback = await runQuery(false);
-      data = fallback.data;
-      error = fallback.error;
-    }
-
-    if (error) {
-      throw error;
-    }
-
-    const article = data as unknown as MetadataArticle | null;
-    if (!article) {
-      return {
-        title: 'Artykuł nie znaleziony | Blog Gedeon',
-        description: 'Strona nie istnieje.',
-      };
-    }
-
-    const title = `${article.title_pl} | Blog Gedeon`;
-    const description = article.excerpt_pl ?? 'Artykuł na blogu Gedeon — albumy, ramki, media fotograficzne.';
-    const imageUrl = resolveCoverImage(article) ?? `${SITE_URL}/og-default.jpg`;
-    const articleUrl = `${SITE_URL}/blog/${slug}`;
-
-    return {
-      title,
-      description,
-      keywords: (article.tags ?? []).filter((tag) => tag !== HOME_FEATURED_TAG).join(', '),
-      openGraph: {
-        type: 'article',
-        url: articleUrl,
-        title: article.title_pl,
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": `${articleUrl}#article`,
+        mainEntityOfPage: articleUrl,
+        headline: article.title_pl,
         description,
-        siteName: 'Blog Gedeon',
-        publishedTime: article.published_at ?? undefined,
-        images: [
+        image: [imageUrl],
+        datePublished: publishedAt,
+        dateModified: updatedAt,
+        articleSection: article.category,
+        author: {
+          "@type": "Person",
+          name: article.author || "Zespol Gedeon",
+        },
+        publisher: {
+          "@type": "Organization",
+          name: "Gedeon",
+          logo: {
+            "@type": "ImageObject",
+            url: DEFAULT_OG_IMAGE,
+          },
+        },
+        keywords: (article.tags ?? []).filter((tag) => tag !== HOME_FEATURED_TAG),
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
           {
-            url: imageUrl,
-            width: 1200,
-            height: 630,
-            alt: article.title_pl,
+            "@type": "ListItem",
+            position: 1,
+            name: "Blog",
+            item: `${SITE_URL}/blog`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: article.title_pl,
+            item: articleUrl,
           },
         ],
       },
-      twitter: {
-        card: 'summary_large_image',
-        title: article.title_pl,
-        description,
-        images: [imageUrl],
-      },
+    ],
+  };
+}
+
+export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const query = await searchParams;
+  const isPreview = query.preview === "1";
+  const articleUrl = `${SITE_URL}/blog/${slug}`;
+
+  if (isPreview) {
+    return {
+      title: "Podglad artykulu | Blog Gedeon",
+      description: "Podglad roboczej wersji artykulu.",
       alternates: {
         canonical: articleUrl,
       },
-    };
-  } catch {
-    return {
-      title: 'Blog Gedeon',
-      description: 'Artykuły o fotografii, albumach i produktach Gedeon.',
+      robots: {
+        index: false,
+        follow: false,
+        noarchive: true,
+        nosnippet: true,
+      },
     };
   }
+
+  const article = await getPublishedArticleBySlug(slug);
+  if (!article) {
+    return {
+      title: "Artykul nie znaleziony | Blog Gedeon",
+      description: "Strona nie istnieje.",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+
+  const title = article.title_pl;
+  const description =
+    article.excerpt_pl ??
+    "Artykul na blogu Gedeon - albumy, ramki i media fotograficzne dla rynku B2B.";
+  const imageUrl = resolveCoverImage(article) ?? DEFAULT_OG_IMAGE;
+
+  return {
+    title,
+    description,
+    keywords: (article.tags ?? []).filter((tag) => tag !== HOME_FEATURED_TAG),
+    alternates: {
+      canonical: articleUrl,
+    },
+    openGraph: {
+      type: "article",
+      url: articleUrl,
+      title,
+      description,
+      siteName: "Gedeon Blog",
+      publishedTime: article.published_at ?? undefined,
+      modifiedTime: article.updated_at ?? undefined,
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [imageUrl],
+    },
+  };
 }
 
-// ── Page Component ────────────────────────────────────────────
-
-export default async function BlogPostPage({ params }: Props) {
+export default async function BlogPostPage({ params, searchParams }: Props) {
   const { slug } = await params;
-  return <BlogPostClient slug={slug} />;
+  const query = await searchParams;
+  const isPreview = query.preview === "1";
+
+  const initialArticle = isPreview ? null : await getPublishedArticleBySlug(slug);
+  const articleJsonLd = initialArticle ? buildArticleJsonLd(initialArticle) : null;
+  const articleJsonLdString = articleJsonLd
+    ? JSON.stringify(articleJsonLd).replace(/</g, "\\u003c")
+    : null;
+
+  return (
+    <>
+      {articleJsonLdString ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: articleJsonLdString }}
+        />
+      ) : null}
+      <BlogPostClient slug={slug} initialArticle={initialArticle} />
+    </>
+  );
 }
+

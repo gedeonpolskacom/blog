@@ -96,6 +96,103 @@ function textFromBlocks(blocks: ContentBlock[]) {
     .join(' ');
 }
 
+function decodeHtmlEntities(value: string): string {
+  return value
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;|&apos;/gi, "'")
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>');
+}
+
+function stripHtml(value: string): string {
+  return decodeHtmlEntities(value)
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function extractHtmlAttribute(tag: string, attribute: string): string {
+  const pattern = new RegExp(
+    `${attribute}\\s*=\\s*(?:"([^"]*)"|'([^']*)'|([^\\s>]+))`,
+    'i'
+  );
+  const match = tag.match(pattern);
+  return (match?.[1] ?? match?.[2] ?? match?.[3] ?? '').trim();
+}
+
+function normalizeImageUrl(value: string): string | null {
+  const trimmed = value.trim();
+  if (!trimmed) return null;
+
+  if (trimmed.startsWith('//')) {
+    return `https:${trimmed}`;
+  }
+
+  if (/^https?:\/\//i.test(trimmed)) {
+    return trimmed.replace(/^http:\/\//i, 'https://');
+  }
+
+  return null;
+}
+
+function parseHtmlToContentBlocks(html: string): ContentBlock[] {
+  const cleaned = html
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<!--[\s\S]*?-->/g, ' ')
+    .replace(/<br\s*\/?>/gi, '\n');
+
+  const blocks: ContentBlock[] = [];
+  let leadAdded = false;
+
+  const blockRegex = /<img\b[^>]*\/?>|<(h[1-6]|p|li|blockquote)\b[^>]*>([\s\S]*?)<\/\1>/gi;
+  let match: RegExpExecArray | null = null;
+
+  while ((match = blockRegex.exec(cleaned)) !== null) {
+    const fragment = match[0];
+
+    if (/^<img\b/i.test(fragment)) {
+      const src = normalizeImageUrl(extractHtmlAttribute(fragment, 'src'));
+      if (!src) continue;
+
+      const alt = stripHtml(extractHtmlAttribute(fragment, 'alt'));
+      blocks.push({
+        type: 'image',
+        src,
+        url: src,
+        alt: alt || undefined,
+      });
+      continue;
+    }
+
+    const tagName = (match[1] ?? '').toLowerCase();
+    const text = stripHtml(match[2] ?? '');
+    if (!text) continue;
+
+    if (tagName.startsWith('h')) {
+      blocks.push({ type: 'heading', text });
+      continue;
+    }
+
+    if (tagName === 'li') {
+      blocks.push({ type: 'paragraph', text: `- ${text}` });
+      continue;
+    }
+
+    if (!leadAdded) {
+      blocks.push({ type: 'lead', text });
+      leadAdded = true;
+      continue;
+    }
+
+    blocks.push({ type: 'paragraph', text });
+  }
+
+  return blocks;
+}
+
 function toContentBlocks(value: unknown): ContentBlock[] {
   if (Array.isArray(value)) {
     const sanitized = value.filter((item): item is ContentBlock => {
@@ -106,7 +203,18 @@ function toContentBlocks(value: unknown): ContentBlock[] {
     if (sanitized.length > 0) return sanitized;
   }
 
-  const text = typeof value === 'string' ? value : '';
+  const text = typeof value === 'string' ? value.trim() : '';
+  if (!text) {
+    return [];
+  }
+
+  if (/<\s*\/?\s*[a-z][^>]*>/i.test(text)) {
+    const fromHtml = parseHtmlToContentBlocks(text);
+    if (fromHtml.length > 0) {
+      return fromHtml;
+    }
+  }
+
   const paragraphs = text
     .split(/\r?\n\r?\n+/)
     .map((part) => part.trim())
@@ -214,7 +322,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'title_pl wymagane' }, { status: 400 });
     }
 
-    const contentBlocks = toContentBlocks(body?.content_pl ?? body?.content_text ?? '');
+    const contentBlocks = toContentBlocks(
+      body?.content_pl ?? body?.content_html ?? body?.content_text ?? ''
+    );
     if (contentBlocks.length === 0) {
       return NextResponse.json({ error: 'content_pl wymagane' }, { status: 400 });
     }

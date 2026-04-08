@@ -430,6 +430,7 @@ function ManualArticlePanel({ onCreated }: { onCreated: (draft: Draft) => void }
           title_pl: title.trim(),
           category,
           excerpt_pl: excerpt.trim(),
+          content_html: content.trim(),
           content_text: content.trim(),
           tags,
           cover_image: coverImage.trim(),
@@ -512,11 +513,14 @@ function ManualArticlePanel({ onCreated }: { onCreated: (draft: Draft) => void }
         <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          placeholder="Treść artykułu (oddziel akapity pustymi liniami)"
+          placeholder="Tresc artykulu (mozna wkleic HTML: p, h2-h6, li, img)"
           className="newsletter-input"
           rows={8}
           style={{ resize: 'vertical', paddingTop: '0.7rem', minHeight: '180px' }}
         />
+        <p style={{ margin: 0, fontSize: '0.75rem', color: 'var(--color-gray-muted)' }}>
+          Wklejony HTML jest automatycznie zamieniany na bloki tresci podczas zapisu.
+        </p>
 
         <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
           <input

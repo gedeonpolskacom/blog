@@ -566,10 +566,20 @@ function ContentRenderer({ blocks, lang, productLinks, textScale = 1, inlineEdit
 
 // Main Client Component
 
-export default function BlogPostClient({ slug }: { slug: string }) {
+export default function BlogPostClient({
+  slug,
+  initialArticle,
+}: {
+  slug: string;
+  initialArticle?: ArticleWithProducts | null;
+}) {
   const searchParams = useSearchParams();
   const [lang, setLang] = useState<'pl' | 'en'>('pl');
-  const [article, setArticle] = useState<ArticleData | null | undefined>(undefined);
+  const initialArticleData = useMemo(
+    () => (initialArticle ? mapDbToArticleData(initialArticle) : undefined),
+    [initialArticle]
+  );
+  const [article, setArticle] = useState<ArticleData | null | undefined>(initialArticleData);
   const [relatedArticles, setRelatedArticles] = useState<ReturnType<typeof toCardShape>[]>([]);
   const [isPreviewEditorOpen, setIsPreviewEditorOpen] = useState(true);
   const [previewTitle, setPreviewTitle] = useState('');
@@ -698,13 +708,15 @@ export default function BlogPostClient({ slug }: { slug: string }) {
 
   useEffect(() => {
     let cancelled = false;
-    const fallbackTimer = setTimeout(() => {
-      if (!cancelled) {
-        setArticle((current) => (current === undefined ? null : current));
-      }
-    }, 8000);
+    let fallbackTimer: ReturnType<typeof setTimeout> | null = null;
 
     if (isPreview) {
+      fallbackTimer = setTimeout(() => {
+        if (!cancelled) {
+          setArticle((current) => (current === undefined ? null : current));
+        }
+      }, 8000);
+
       const controller = new AbortController();
       const previewTimeout = setTimeout(() => controller.abort(), 7000);
 
@@ -721,35 +733,25 @@ export default function BlogPostClient({ slug }: { slug: string }) {
           }
         })
         .finally(() => clearTimeout(previewTimeout));
-    } else {
+    } else if (!initialArticleData) {
+      fallbackTimer = setTimeout(() => {
+        if (!cancelled) {
+          setArticle((current) => (current === undefined ? null : current));
+        }
+      }, 8000);
+
       getArticleBySlug(slug)
-        .then(data => {
+        .then((data) => {
           if (cancelled) return;
-
-          if (data) {
-            setArticle(mapDbToArticleData(data));
-            return;
-          }
-
-          // Fallback: allow admin preview even without ?preview=1 when article is still draft.
-          return fetch(`/api/admin/articles?slug=${encodeURIComponent(slug)}`)
-            .then((r) => (r.ok ? r.json() : null))
-            .then((adminData) => {
-              if (!cancelled) {
-                setArticle(adminData ? mapDbToArticleData(adminData as ArticleWithProducts) : null);
-              }
-            })
-            .catch(() => {
-              if (!cancelled) {
-                setArticle(null);
-              }
-            });
+          setArticle(data ? mapDbToArticleData(data) : null);
         })
         .catch(() => {
           if (!cancelled) {
             setArticle(null);
           }
         });
+    } else {
+      setArticle(initialArticleData);
     }
 
     getPublishedArticles({ limit: 4 })
@@ -768,9 +770,11 @@ export default function BlogPostClient({ slug }: { slug: string }) {
 
     return () => {
       cancelled = true;
-      clearTimeout(fallbackTimer);
+      if (fallbackTimer) {
+        clearTimeout(fallbackTimer);
+      }
     };
-  }, [isPreview, slug]);
+  }, [initialArticleData, isPreview, slug]);
 
   useEffect(() => {
     if (isPreview || !article) {
