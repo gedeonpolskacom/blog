@@ -123,6 +123,44 @@ function deriveGalleryFromCoverUrl(coverUrl?: string | null, max = 6): string[] 
   return uniqStrings([coverUrl, ...generated]).slice(0, max * 2 + 1);
 }
 
+function ensureAudienceSplitForRender(blocks: ContentBlock[]): ContentBlock[] {
+  if (!blocks.length) return [];
+
+  const headingText = (block: ContentBlock) =>
+    block.type === 'heading' ? String(block.text ?? '').toLowerCase() : '';
+
+  const hasB2BSection = blocks.some((block) =>
+    /(partner|hurtown|b2b|dla studia|dla sklepu)/i.test(headingText(block))
+  );
+  const hasEndCustomerSection = blocks.some((block) =>
+    /(klient|konsument|użytkownik końcowy|detal)/i.test(headingText(block))
+  );
+
+  const normalized = [...blocks];
+
+  if (!hasB2BSection) {
+    normalized.push(
+      { type: 'heading', text: 'Dla partnerów B2B' },
+      {
+        type: 'paragraph',
+        text: 'Sekcja B2B: rekomendowane zastosowania produktu, argumenty marżowe i wskazówki sprzedażowe dla studiów oraz sklepów foto.',
+      },
+    );
+  }
+
+  if (!hasEndCustomerSection) {
+    normalized.push(
+      { type: 'heading', text: 'Jak komunikować to klientowi końcowemu' },
+      {
+        type: 'paragraph',
+        text: 'Sekcja dla partnera: jak opisać korzyści klientowi końcowemu językiem wartości i jakości, bez rywalizacji wyłącznie ceną.',
+      },
+    );
+  }
+
+  return normalized;
+}
+
 function mapDbToArticleData(a: ArticleWithProducts): ArticleData {
   const productLinks = (a.article_products ?? []).map((ap) => ({
     name: ap.products?.name ?? '',
@@ -158,7 +196,7 @@ function mapDbToArticleData(a: ArticleWithProducts): ArticleData {
     tags: (a.tags ?? []).filter((tag) => tag !== HOME_FEATURED_TAG),
     tagsEn: (a.tags ?? []).filter((tag) => tag !== HOME_FEATURED_TAG),
     productLinks,
-    content: (a.content_pl as ContentBlock[]) ?? [],
+    content: ensureAudienceSplitForRender((a.content_pl as ContentBlock[]) ?? []),
   };
 }
 
